@@ -182,11 +182,16 @@
         });
         scene!.clearColor = cachedColor;
     }
+
+    function exit() {
+        window.history.back();
+    }
 </script>
 
 <div bind:this={container} class="canvas-container hud-expanded">
     <div bind:this={overlay} class="loading-overlay" />
     <canvas bind:this={canvas} width="512" height="512" />
+    <div class="exit-button" on:pointerdown={exit}>x</div>
     <div bind:this={hud} class="hud" class:collapsed>
         <button bind:this={hudToggleBtn} class="hud-toggle-btn">(</button>
         <div class="section">
@@ -265,25 +270,36 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 256px;
+        width: 286px;
         height: 100%;
         box-sizing: border-box;
         font-size: 14px;
-        border-right: 1px solid #444;
         background-color: #1a1b1e;
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
         transition: transform 0.2s ease;
         margin: 0;
-        padding: 0;
+        padding: 0 30px 0 0;
+        overflow-x: hidden;
+        overflow-y: auto;
 
         @media (max-width: 768px) {
-            width: calc(100% - 30px);
+            width: 100%;
         }
+    }
+
+    .exit-button {
+        position: absolute;
+        top: 10px;
+        right: 16px;
+        color: #aaa;
+        font-size: 24px;
+        cursor: pointer;
+        font-weight: bold;
     }
 
     .hud-toggle-btn {
         position: absolute;
-        right: -30px;
+        right: 0;
         top: 50%;
         transform: translateY(-50%);
         background-color: #1a1b1e;
@@ -296,6 +312,7 @@
         height: 100%;
         box-sizing: border-box;
         transition: background-color 0.2s ease;
+        border-left: 1px solid #444;
     }
 
     .hud-toggle-btn:hover {
@@ -303,7 +320,7 @@
     }
 
     .hud.collapsed {
-        transform: translateX(-100%);
+        transform: translateX(calc(-100% + 30px));
     }
 
     .section {
@@ -317,6 +334,7 @@
         color: #aaa;
         font-weight: bold;
         padding: 4px;
+        padding-top: 10px;
     }
 
     .section-title {

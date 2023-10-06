@@ -104,13 +104,22 @@
         border: 1px solid #333;
         box-sizing: border-box;
         width: 100%;
-        margin: 10px;
+        margin: 0;
 
         @media (min-width: 576px) {
             width: 384px;
-            margin-top: 0;
         }
-    }  
+    }
+
+    .grid {
+        margin-top: 10px;
+        margin-left: 0;
+
+        @media (min-width: 576px) {
+            margin-top: 0;
+            margin-left: 10px;
+        }
+    }
 
     .grid-item {
         @media (min-width: 576px) {
