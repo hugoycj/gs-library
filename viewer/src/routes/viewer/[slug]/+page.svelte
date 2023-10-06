@@ -287,16 +287,6 @@
         }
     }
 
-    .exit-button {
-        position: absolute;
-        top: 10px;
-        right: 16px;
-        color: #aaa;
-        font-size: 24px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
     .hud-toggle-btn {
         position: absolute;
         right: 0;

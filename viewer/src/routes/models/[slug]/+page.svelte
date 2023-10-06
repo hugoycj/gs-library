@@ -16,10 +16,15 @@
         const image = event.currentTarget as HTMLImageElement;
         image.src = placeholderImage;
     }
+
+    function exit() {
+        window.history.back();
+    }
 </script>
 
 <div class="container">
     <div class="header">{data.model.title}</div>
+    <div class="exit-button" on:pointerdown={exit}>x</div>
     <div class="model-container">
         <div class="model-info">
             <p class="model-header">Info</p>
