@@ -7,5 +7,5 @@ RUN bun install
 COPY viewer/ /app
 RUN bun run build
 
-EXPOSE 7860
-ENTRYPOINT ["bun", "run", "vite"]
+EXPOSE 3000
+CMD ["bun", "build"]
