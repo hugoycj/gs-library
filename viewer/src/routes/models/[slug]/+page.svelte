@@ -21,6 +21,17 @@
 <div class="container">
     <div class="header">{data.model.title}</div>
     <div class="model-container">
+        <div class="model-info">
+            <p class="model-header">Info</p>
+            <table class="table">
+                {#if data.model.paper}
+                    <tr>
+                        <td>Paper</td>
+                        <td><a href={data.model.paper} target="_blank">Link</a></td>
+                    </tr>
+                {/if}
+            </table>
+        </div>
         <div class="grid-container">
             <div class="grid">
                 {#each data.scenes as scene}
@@ -35,17 +46,6 @@
                     </a>
                 {/each}
             </div>
-        </div>
-        <div class="model-info">
-            <p class="model-header">Info</p>
-            <table class="table">
-                {#if data.model.paper}
-                    <tr>
-                        <td>Paper</td>
-                        <td><a href={data.model.paper} target="_blank">Link</a></td>
-                    </tr>
-                {/if}
-            </table>
         </div>
     </div>
 </div>

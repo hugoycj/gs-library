@@ -5,6 +5,7 @@
 
     export let data: {
         scene: {
+            title: string;
             url: string;
         };
     };
@@ -189,6 +190,9 @@
     <div bind:this={hud} class="hud" class:collapsed>
         <button bind:this={hudToggleBtn} class="hud-toggle-btn">(</button>
         <div class="section">
+            <div class="title">{data.scene.title}</div>
+        </div>
+        <div class="section">
             <div class="section-title">Stats</div>
             <div class="info-panel">
                 <div>FPS: <span bind:this={fpsCount}>0</span></div>
@@ -220,13 +224,13 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 100%;
-        height: 100%;
+        width: 100wh;
+        height: 100vh;
         overflow: hidden;
     }
 
     .canvas-container.hud-expanded {
-        padding-left: 192px;
+        padding-left: 256px;
     }
 
     .loading-overlay {
@@ -261,7 +265,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 192px;
+        width: 256px;
         height: 100%;
         box-sizing: border-box;
         font-size: 14px;
@@ -271,6 +275,10 @@
         transition: transform 0.2s ease;
         margin: 0;
         padding: 0;
+
+        @media (max-width: 768px) {
+            width: calc(100% - 30px);
+        }
     }
 
     .hud-toggle-btn {
@@ -304,13 +312,20 @@
         box-sizing: border-box;
     }
 
+    .title {
+        font-size: 16px;
+        color: #aaa;
+        font-weight: bold;
+        padding: 4px;
+    }
+
     .section-title {
         font-size: 11px;
         font-weight: light;
         text-transform: uppercase;
         color: #aaa;
         width: 100%;
-        padding: 4px 4px 4px 4px;
+        padding: 4px;
     }
 
     .info-panel {
