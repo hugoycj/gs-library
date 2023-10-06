@@ -5,6 +5,8 @@
         model: {
             title: string;
             paper: string;
+            project: string;
+            code: string;
         };
         scenes: {
             slug: string;
@@ -32,7 +34,19 @@
                 {#if data.model.paper}
                     <tr>
                         <td>Paper</td>
-                        <td><a href={data.model.paper} target="_blank">Link</a></td>
+                        <td><a href={data.model.paper} target="_blank">{data.model.paper}</a></td>
+                    </tr>
+                {/if}
+                {#if data.model.project}
+                    <tr>
+                        <td>Project</td>
+                        <td><a href={data.model.project} target="_blank">{data.model.project}</a></td>
+                    </tr>
+                {/if}
+                {#if data.model.code}
+                    <tr>
+                        <td>Code</td>
+                        <td><a href={data.model.code} target="_blank">{data.model.code}</a></td>
                     </tr>
                 {/if}
             </table>
@@ -56,6 +70,7 @@
 </div>
 
 <style>
+
     .model-header {
         padding: 10px;
         font-size: 16px;
@@ -63,11 +78,27 @@
         margin: 0;
     }
 
+    .model-info {
+        border: 1px solid #333;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+
+        @media (min-width: 576px) {
+            width: 384px;
+        }
+    }
+
     .table {
-        width: auto;
+        table-layout: fixed;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border-collapse: collapse;
     }
 
     .table td {
+        width: 100%;
         margin: 0;
         padding: 10px;
         border-top: 1px solid #333;
@@ -75,17 +106,18 @@
     }
 
     .table td:first-child {
-        min-width: 128px;
+        width: 128px;
         background-color: #222;
         border-right: 1px solid #333;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         color: #aaa;
     }
 
     .table td:last-child {
         width: 100%;
-        font-size: 16px;
+        font-size: 14px;
+        overflow: hidden;
     }
 
     .table a {
@@ -103,17 +135,6 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-    }
-
-    .model-info {
-        border: 1px solid #333;
-        box-sizing: border-box;
-        width: 100%;
-        margin: 0;
-
-        @media (min-width: 576px) {
-            width: 384px;
-        }
     }
 
     .grid {

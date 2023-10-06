@@ -2,11 +2,17 @@
     {
         "slug": "mv-dream",
         "title": "MVDream",
-        "paper": "https://huggingface.co/papers/2308.16512"
+        "paper": "https://huggingface.co/papers/2308.16512",
+        "project": "https://mv-dream.github.io/",
+        "code": "https://github.com/bytedance/MVDream",
+        "spaces": []
     },
     {
         "slug": "sync-dreamer",
         "title": "SyncDreamer",
-        "paper": "https://huggingface.co/papers/2309.03453"
+        "paper": "https://huggingface.co/papers/2309.03453",
+        "project": "https://liuyuan-pal.github.io/SyncDreamer/",
+        "code": "https://github.com/liuyuan-pal/SyncDreamer",
+        "spaces": []
     }
 ]
