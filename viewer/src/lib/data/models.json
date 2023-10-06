@@ -1,0 +1,12 @@
+[
+    {
+        "slug": "mv-dream",
+        "title": "MVDream",
+        "paper": "https://huggingface.co/papers/2308.16512"
+    },
+    {
+        "slug": "sync-dreamer",
+        "title": "SyncDreamer",
+        "paper": "https://huggingface.co/papers/2309.03453"
+    }
+]

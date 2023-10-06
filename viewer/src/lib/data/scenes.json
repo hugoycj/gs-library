@@ -1,0 +1,20 @@
+[
+    {
+        "slug": "boombox",
+        "model": "mv-dream",
+        "title": "BoomBox",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/BoomBox/glTF-Binary/BoomBox.glb"
+    },
+    {
+        "slug": "duck",
+        "model": "mv-dream",
+        "title": "Duck",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb"
+    },
+    {
+        "slug": "toycar",
+        "model": "sync-dreamer",
+        "title": "Toy Car",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/ToyCar/glTF-Binary/ToyCar.glb"
+    }
+]

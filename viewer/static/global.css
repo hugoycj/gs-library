@@ -1,0 +1,121 @@
+html,
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #1a1b1e;
+    color: white;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: 576px) {
+        max-width: 540px;
+    }
+
+    @media (min-width: 768px) {
+        max-width: 720px;
+    }
+
+    @media (min-width: 992px) {
+        max-width: 960px;
+    }
+
+    @media (min-width: 1200px) {
+        max-width: 1140px;
+    }
+}
+
+
+.header {
+    padding: 20px 0;
+    font-size: 32px;
+    font-weight: bold;
+    color: #aaa;
+}
+
+.viewer {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+}
+
+.grid-item {
+    background: #333;
+    position: relative;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    overflow: hidden;
+    width: 100%;
+
+    @media (min-width: 576px) {
+        width: calc(33.333% - 10px);
+    }
+
+    @media (min-width: 768px) {
+        width: calc(25% - 10px);
+    }
+
+    @media (min-width: 992px) {
+        width: calc(20% - 10px);
+    }
+
+    @media (min-width: 1200px) {
+        width: calc(16.666% - 10px);
+    }
+}
+
+.grid-item::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+.grid-item:hover {
+    cursor: pointer;
+}
+
+.grid-item .title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    height: 40px;
+    overflow: hidden;
+    transition: height 0.2s ease;
+}
+
+.grid-item:hover .title {
+    height: 48px;
+}
+
+.thumbnail {
+    position: absolute;
+    top: -10px;
+    ;
+    left: 0;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    scale: 1;
+    transition: scale 0.2s ease;
+}
+
+.grid-item:hover .thumbnail {
+    scale: 1.1;
+}
