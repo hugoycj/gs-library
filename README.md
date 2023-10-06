@@ -3,7 +3,7 @@ title: Igf
 emoji: 🏢
 colorFrom: gray
 colorTo: indigo
-sdk: static
+sdk: docker
 pinned: false
 license: mit
 ---
