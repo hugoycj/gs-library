@@ -8,4 +8,4 @@ COPY viewer/ /app
 RUN bun run build
 
 EXPOSE 7860
-ENTRYPOINT ["bun", "./build"]
+ENTRYPOINT ["bun", "run", "vite"]
