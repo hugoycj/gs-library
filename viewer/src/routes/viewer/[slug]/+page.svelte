@@ -6,7 +6,11 @@
     export let data: {
         scene: {
             title: string;
+            model: string;
             url: string;
+        };
+        model: {
+            title: string;
         };
     };
 
@@ -198,6 +202,16 @@
             <div class="title">{data.scene.title}</div>
         </div>
         <div class="section">
+            <div class="section-title">Model</div>
+            <div class="info-panel">
+                {#if data.scene.model}
+                    <a href={`/models/${data.scene.model}`} class="section-label">{data.model.title}</a>
+                {:else}
+                    <div class="section-label">None</div>
+                {/if}
+            </div>
+        </div>
+        <div class="section">
             <div class="section-title">Stats</div>
             <div class="info-panel">
                 <div>FPS: <span bind:this={fpsCount}>0</span></div>
@@ -334,6 +348,11 @@
         color: #aaa;
         width: 100%;
         padding: 4px;
+    }
+
+    .section-label {
+        font-size: 14px;
+        color: #ddd;
     }
 
     .info-panel {

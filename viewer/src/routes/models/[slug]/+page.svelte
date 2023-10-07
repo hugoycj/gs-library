@@ -19,14 +19,16 @@
         image.src = placeholderImage;
     }
 
-    function exit() {
-        window.history.back();
+    function goHome() {
+        window.location.href = "/";
     }
 </script>
 
+<div class="banner">
+    <h1 on:pointerdown={goHome}>IGF</h1>
+</div>
 <div class="container">
     <div class="header">{data.model.title}</div>
-    <div class="exit-button" on:pointerdown={exit}>x</div>
     <div class="model-container">
         <div class="model-info">
             <p class="model-header">Info</p>
@@ -52,25 +54,30 @@
             </table>
         </div>
         <div class="grid-container">
-            <div class="grid">
-                {#each data.scenes as scene}
-                    <a href={`/viewer/${scene.slug}`} class="grid-item">
-                        <img
-                            src={`/thumbnails/${scene.slug}.png`}
-                            alt={scene.title}
-                            class="thumbnail"
-                            on:error={(event) => handleImageError(event)}
-                        />
-                        <div class="title">{scene.title}</div>
-                    </a>
-                {/each}
-            </div>
+            {#if data.scenes.length > 0}
+                <div class="grid">
+                    {#each data.scenes as scene}
+                        <a href={`/viewer/${scene.slug}`} class="grid-item">
+                            <img
+                                src={`/thumbnails/${scene.slug}.png`}
+                                alt={scene.title}
+                                class="thumbnail"
+                                on:error={(event) => handleImageError(event)}
+                            />
+                            <div class="title">{scene.title}</div>
+                        </a>
+                    {/each}
+                </div>
+            {:else}
+                <div class="grid">
+                    <div class="warning">No scenes found</div>
+                </div>
+            {/if}
         </div>
     </div>
 </div>
 
 <style>
-
     .model-header {
         padding: 10px;
         font-size: 16px;
@@ -163,5 +170,12 @@
         @media (min-width: 1200px) {
             width: calc(25% - 10px);
         }
+    }
+
+    .warning {
+        width: 100%;
+        margin-top: 20px;
+        text-align: center;
+        color: #aaa;
     }
 </style>

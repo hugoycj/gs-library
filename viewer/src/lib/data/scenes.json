@@ -1,7 +1,7 @@
 [
     {
         "slug": "boombox",
-        "model": "mv-dream",
+        "model": "",
         "title": "BoomBox",
         "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/BoomBox/glTF-Binary/BoomBox.glb"
     },
@@ -13,7 +13,7 @@
     },
     {
         "slug": "toycar",
-        "model": "sync-dreamer",
+        "model": "",
         "title": "Toy Car",
         "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/ToyCar/glTF-Binary/ToyCar.glb"
     }

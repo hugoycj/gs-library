@@ -2,8 +2,15 @@
     import { activeTab } from "./store.js";
     import ModelsView from "./components/ModelsView.svelte";
     import ScenesView from "./components/ScenesView.svelte";
+
+    function goHome() {
+        window.location.href = "/";
+    }
 </script>
 
+<div class="banner">
+    <h1 on:pointerdown={goHome}>IGF</h1>
+</div>
 <div class="container">
     <div class="tabs">
         <button on:click={() => activeTab.set("Models")} class={$activeTab === "Models" ? "active" : ""}>Models</button>
