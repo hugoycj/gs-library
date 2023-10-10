@@ -26,6 +26,7 @@ body {
     max-height: 100vh;
     overflow-y: auto;
     position: relative;
+    padding-bottom: 96px;
 
     @media (min-width: 576px) {
         max-width: 540px;
