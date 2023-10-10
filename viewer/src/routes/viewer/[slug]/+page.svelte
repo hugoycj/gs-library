@@ -2,6 +2,7 @@
     import { onMount, onDestroy } from "svelte";
     import * as BABYLON from "@babylonjs/core";
     import "@babylonjs/loaders/glTF";
+    import "@babylonjs/loaders/OBJ";
 
     export let data: {
         scene: {
@@ -24,6 +25,7 @@
     let camera: BABYLON.ArcRotateCamera | null = null;
     let container: HTMLDivElement | null = null;
     let canvas: HTMLCanvasElement | null = null;
+    let loadingBarFill: HTMLDivElement | null = null;
     let collapsed = false;
 
     onMount(() => {
@@ -84,7 +86,10 @@
         scene = new BABYLON.Scene(engine);
         scene.clearColor = BABYLON.Color4.FromHexString("#1A1B1EFF");
 
-        await BABYLON.SceneLoader.AppendAsync("", url, scene);
+        await BABYLON.SceneLoader.AppendAsync("", url, scene, (event) => {
+            const progress = event.loaded / event.total;
+            loadingBarFill!.style.width = `${progress * 100}%`;
+        });
 
         scene.cameras.forEach((camera) => {
             camera.dispose();
@@ -193,7 +198,11 @@
 </script>
 
 <div bind:this={container} class="canvas-container hud-expanded">
-    <div bind:this={overlay} class="loading-overlay" />
+    <div bind:this={overlay} class="loading-overlay">
+        <div class="loading-bar">
+            <div bind:this={loadingBarFill} class="loading-bar-fill" />
+        </div>
+    </div>
     <canvas bind:this={canvas} width="512" height="512" />
     <div class="exit-button" on:pointerdown={exit}>x</div>
     <div bind:this={hud} class="hud" class:collapsed>
@@ -260,15 +269,35 @@
         height: 100%;
         background-color: #1a1b1e;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         z-index: 100;
+        gap: 10px;
     }
 
     .loading-overlay::before {
         content: "Loading...";
         color: white;
         font-size: 16px;
+    }
+
+    .loading-bar {
+        position: relative;
+        width: 256px;
+        height: 20px;
+        border: 2px solid #aaa;
+        background-color: #1a1b1e;
+    }
+
+    .loading-bar-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background-color: #555;
+        transition: width 0.2s ease;
     }
 
     canvas {

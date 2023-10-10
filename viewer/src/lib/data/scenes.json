@@ -1,20 +1,44 @@
 [
     {
-        "slug": "boombox",
-        "model": "",
-        "title": "BoomBox",
-        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/BoomBox/glTF-Binary/BoomBox.glb"
+        "slug": "sync-dreamer-armor",
+        "model": "sync-dreamer",
+        "title": "armor",
+        "url": "https://huggingface.co/datasets/dylanebert/igf-results/resolve/main/sync-dreamer/armor.glb"
     },
     {
-        "slug": "duck",
-        "model": "mv-dream",
-        "title": "Duck",
-        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb"
+        "slug": "sync-dreamer-deer",
+        "model": "sync-dreamer",
+        "title": "deer",
+        "url": "https://huggingface.co/datasets/dylanebert/igf-results/resolve/main/sync-dreamer/deer.glb"
     },
     {
-        "slug": "toycar",
-        "model": "",
-        "title": "Toy Car",
-        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/ToyCar/glTF-Binary/ToyCar.glb"
+        "slug": "sync-dreamer-drum",
+        "model": "sync-dreamer",
+        "title": "drum",
+        "url": "https://huggingface.co/datasets/dylanebert/igf-results/resolve/main/sync-dreamer/drum.glb"
+    },
+    {
+        "slug": "sync-dreamer-forest",
+        "model": "sync-dreamer",
+        "title": "forest",
+        "url": "https://huggingface.co/datasets/dylanebert/igf-results/resolve/main/sync-dreamer/forest.glb"
+    },
+    {
+        "slug": "sync-dreamer-monkey",
+        "model": "sync-dreamer",
+        "title": "monkey",
+        "url": "https://huggingface.co/datasets/dylanebert/igf-results/resolve/main/sync-dreamer/monkey.glb"
+    },
+    {
+        "slug": "sync-dreamer-poro",
+        "model": "sync-dreamer",
+        "title": "poro",
+        "url": "https://huggingface.co/datasets/dylanebert/igf-results/resolve/main/sync-dreamer/poro.glb"
+    },
+    {
+        "slug": "sync-dreamer-train",
+        "model": "sync-dreamer",
+        "title": "train",
+        "url": "https://huggingface.co/datasets/dylanebert/igf-results/resolve/main/sync-dreamer/train.glb"
     }
 ]
