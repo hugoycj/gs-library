@@ -9,6 +9,7 @@
             title: string;
             model: string;
             url: string;
+            prompt: string;
         };
         model: {
             title: string;
@@ -115,10 +116,14 @@
             camera!.panningSensibility = 10000 / camera!.radius;
         });
 
-        const light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(-0.5, 1, 0.5), scene);
-        light.intensity = 0.7;
+        const light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
+        light.intensity = 1;
         light.diffuse = new BABYLON.Color3(1, 1, 1);
         light.groundColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+
+        const sun = new BABYLON.DirectionalLight("sun", new BABYLON.Vector3(-.5, -1, -.5), scene);
+        sun.intensity = 2;
+        sun.diffuse = new BABYLON.Color3(1, 1, 1);
 
         const standardSize = 10;
         let scaleFactor = 1;
@@ -220,6 +225,14 @@
                 {/if}
             </div>
         </div>
+        {#if data.scene.prompt}
+            <div class="section">
+                <div class="section-title">Prompt</div>
+                <div class="info-panel">
+                    <div class="section-label">{data.scene.prompt}</div>
+                </div>
+            </div>
+        {/if}
         <div class="section">
             <div class="section-title">Stats</div>
             <div class="info-panel">

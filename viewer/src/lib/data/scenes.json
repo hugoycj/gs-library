@@ -40,5 +40,61 @@
         "model": "sync-dreamer",
         "title": "train",
         "url": "https://huggingface.co/datasets/dylanebert/igf-results/resolve/main/sync-dreamer/train.glb"
+    },
+    {
+        "slug": "dreamfusion-sweaterfrog",
+        "model": "dreamfusion",
+        "title": "sweater frog",
+        "url": "https://dreamfusion3d.github.io/assets/meshes2/sweaterfrog_1step.glb",
+        "prompt": "frog wearing a sweater"
+    },
+    {
+        "slug": "dreamfusion-chick",
+        "model": "dreamfusion",
+        "title": "chick",
+        "url": "https://dreamfusion3d.github.io/assets/meshes2/44855521_sept18_hero16_047a_DSLR_photo_of_an_eggshell_broken_in_two_with_an_adorable_chick_standing_next_to_it_1step.glb",
+        "prompt": "eggshell broken in two with an adorable chick standing next to it"
+    },
+    {
+        "slug": "dreamfusion-ghost",
+        "model": "dreamfusion",
+        "title": "ghost",
+        "url": "https://dreamfusion3d.github.io/assets/meshes2/44934035_sept18_hero19_113a_DSLR_photo_of_a_ghost_eating_a_hamburger_1step.glb",
+        "prompt": "ghost eating a hamburger"
+    },
+    {
+        "slug": "dreamfusion-pig",
+        "model": "dreamfusion",
+        "title": "pig",
+        "url": "https://dreamfusion3d.github.io/assets/meshes2/44844973_sept18_hero14_076a_pig_wearing_a_backpack_1step.glb",
+        "prompt": "a pig wearing a backback"
+    },
+    {
+        "slug": "dreamfusion-eagle",
+        "model": "dreamfusion",
+        "title": "eagle",
+        "url": "https://dreamfusion3d.github.io/assets/meshes2/44853505_sept18_hero15_145a_bald_eagle_carved_out_of_wood_1step.glb",
+        "prompt": "a bald eagle carved out of wood"
+    },
+    {
+        "slug": "dreamfusion-crab",
+        "model": "dreamfusion",
+        "title": "crab",
+        "url": "https://dreamfusion3d.github.io/assets/meshes2/44930695_sept18_hero18_103a_crab,_low_poly_1step.glb",
+        "prompt": "a crab, low poly"
+    },
+    {
+        "slug": "dreamfusion-lemur",
+        "model": "dreamfusion",
+        "title": "lemur",
+        "url": "https://dreamfusion3d.github.io/assets/meshes2/44853505_sept18_hero15_124a_lemur_taking_notes_in_a_journal_1step.glb",
+        "prompt": "a lemur taking notes in a journal"
+    },
+    {
+        "slug": "dreamfusion-corgi",
+        "model": "dreamfusion",
+        "title": "corgi",
+        "url": "https://dreamfusion3d.github.io/assets/meshes2/44960400_sept18_hero20peter_117a_plush_toy_of_a_corgi_nurse_1step.glb",
+        "prompt": "a plush toy of a corgi nurse"
     }
 ]

@@ -12,6 +12,7 @@
         "title": "DreamFusion",
         "paper": "https://arxiv.org/abs/2209.14988",
         "project": "https://dreamfusion3d.github.io/index.html",
+        "code": "https://github.com/ashawkey/stable-dreamfusion",
         "spaces": []
     },
     {
