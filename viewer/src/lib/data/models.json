@@ -8,6 +8,13 @@
         "spaces": []
     },
     {
+        "slug": "dreamfusion",
+        "title": "DreamFusion",
+        "paper": "https://arxiv.org/abs/2209.14988",
+        "project": "https://dreamfusion3d.github.io/index.html",
+        "spaces": []
+    },
+    {
         "slug": "mv-dream",
         "title": "MVDream",
         "paper": "https://huggingface.co/papers/2308.16512",
