@@ -27,14 +27,16 @@
 
 <div class="grid">
     {#each models as model}
-        <a href={`/models/${model.slug}`} class="grid-item">
-            <img
-                src={`/thumbnails/${sceneMap[model.slug]}.png`}
-                alt={model.title}
-                class="thumbnail"
-                on:error={(event) => handleImageError(event)}
-            />
-            <div class="title">{model.title}</div>
-        </a>
+        {#if sceneMap[model.slug] !== undefined}
+            <a href={`/models/${model.slug}`} class="grid-item">
+                <img
+                    src={`/thumbnails/${sceneMap[model.slug]}.png`}
+                    alt={model.title}
+                    class="thumbnail"
+                    on:error={(event) => handleImageError(event)}
+                />
+                <div class="title">{model.title}</div>
+            </a>
+        {/if}
     {/each}
 </div>

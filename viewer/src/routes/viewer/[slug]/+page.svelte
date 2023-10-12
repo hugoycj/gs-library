@@ -10,6 +10,7 @@
             model: string;
             url: string;
             prompt: string;
+            pipeline: string[];
         };
         model: {
             title: string;
@@ -121,7 +122,7 @@
         light.diffuse = new BABYLON.Color3(1, 1, 1);
         light.groundColor = new BABYLON.Color3(0.3, 0.3, 0.3);
 
-        const sun = new BABYLON.DirectionalLight("sun", new BABYLON.Vector3(-.5, -1, -.5), scene);
+        const sun = new BABYLON.DirectionalLight("sun", new BABYLON.Vector3(-0.5, -1, -0.5), scene);
         sun.intensity = 2;
         sun.diffuse = new BABYLON.Color3(1, 1, 1);
 
@@ -225,6 +226,16 @@
                 {/if}
             </div>
         </div>
+        {#if data.scene.pipeline}
+            <div class="section">
+                <div class="section-title">Pipeline</div>
+                <div class="info-panel">
+                    {#each data.scene.pipeline as step}
+                        <div class="section-label">{step}</div>
+                    {/each}
+                </div>
+            </div>
+        {/if}
         {#if data.scene.prompt}
             <div class="section">
                 <div class="section-title">Prompt</div>

@@ -1,4 +1,3 @@
-import { error } from "@sveltejs/kit";
 import { getModels, getScenes } from "$lib/dataLoader";
 
 export async function load({ params }) {
