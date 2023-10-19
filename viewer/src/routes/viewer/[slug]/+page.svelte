@@ -1,13 +1,14 @@
 <script lang="ts">
     import { onMount, onDestroy } from "svelte";
-    import * as BABYLON from "@babylonjs/core";
-    import "@babylonjs/loaders/glTF";
-    import "@babylonjs/loaders/OBJ";
+    import type { IViewer } from "./IViewer";
+    import { BabylonViewer } from "./BabylonViewer";
+    import { SplatViewer } from "./SplatViewer";
 
     export let data: {
         scene: {
             title: string;
             model: string;
+            type: string;
             url: string;
             prompt: string;
             pipeline: string[];
@@ -17,166 +18,81 @@
         };
     };
 
-    let overlay: HTMLDivElement | null = null;
-    let hud: HTMLDivElement | null = null;
-    let hudToggleBtn: HTMLButtonElement | null = null;
-    let triangleCount: HTMLSpanElement | null = null;
-    let fpsCount: HTMLSpanElement | null = null;
-    let engine: BABYLON.Engine | null = null;
-    let scene: BABYLON.Scene | null = null;
-    let camera: BABYLON.ArcRotateCamera | null = null;
-    let container: HTMLDivElement | null = null;
-    let canvas: HTMLCanvasElement | null = null;
-    let loadingBarFill: HTMLDivElement | null = null;
+    let stats: { name: string; value: any }[] = [];
+
+    let viewer: IViewer;
+    let overlay: HTMLDivElement;
+    let container: HTMLDivElement;
+    let hudToggleBtn: HTMLButtonElement;
+    let canvas: HTMLCanvasElement;
+    let loadingBarFill: HTMLDivElement;
     let collapsed = false;
 
-    onMount(() => {
+    onMount(initViewer);
+    onDestroy(destroyViewer);
+
+    async function initViewer() {
         document.body.classList.add("viewer");
-
-        const isMobile = window.innerWidth < 768;
-        if (isMobile) {
-            collapsed = true;
-            hudToggleBtn!.textContent = ")";
-            container!.classList.remove("hud-expanded");
+        if (data.scene.type == "mesh") {
+            viewer = new BabylonViewer(canvas);
+        } else if (data.scene.type == "splat") {
+            viewer = new SplatViewer(canvas);
+        } else {
+            console.error(`Unsupported scene type: ${data.scene.type}`);
         }
-
-        loadModel(data.scene.url);
-
-        hudToggleBtn!.addEventListener("click", () => {
-            collapsed = !collapsed;
-            hudToggleBtn!.textContent = collapsed ? ")" : "(";
-            if (collapsed) {
-                container!.classList.remove("hud-expanded");
-            } else {
-                container!.classList.add("hud-expanded");
-            }
-        });
-
-        const modeItems = document.querySelectorAll(".mode-item");
-        modeItems.forEach((item) => {
-            item.addEventListener("click", (event) => {
-                const currentTarget = event.currentTarget as HTMLElement;
-                const mode = currentTarget.getAttribute("data-mode");
-
-                modeItems.forEach((i) => i.classList.remove("active"));
-                currentTarget.classList.add("active");
-
-                switch (mode) {
-                    case "wireframe":
-                        scene!.forceWireframe = true;
-                        break;
-                    default:
-                        scene!.forceWireframe = false;
-                        break;
-                }
-            });
-        });
-    });
-
-    onDestroy(() => {
-        if (scene) {
-            scene.dispose();
-            document.body.classList.remove("viewer");
-        }
-    });
-
-    async function loadModel(url: string) {
-        overlay!.style.display = "flex";
-
-        engine = new BABYLON.Engine(canvas, true);
-
-        scene = new BABYLON.Scene(engine);
-        scene.clearColor = BABYLON.Color4.FromHexString("#1A1B1EFF");
-
-        await BABYLON.SceneLoader.AppendAsync("", url, scene, (event) => {
-            const progress = event.loaded / event.total;
-            loadingBarFill!.style.width = `${progress * 100}%`;
-        });
-
-        scene.cameras.forEach((camera) => {
-            camera.dispose();
-        });
-
-        scene.lights.forEach((light) => {
-            light.dispose();
-        });
-
-        camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 3, Math.PI / 3, 30, BABYLON.Vector3.Zero(), scene);
-        camera.angularSensibilityY = 1000;
-        camera.panningSensibility = 500;
-        camera.wheelPrecision = 5;
-        camera.inertia = 0.9;
-        camera.panningInertia = 0.9;
-        camera.lowerRadiusLimit = 3;
-        camera.upperRadiusLimit = 100;
-        camera.setTarget(BABYLON.Vector3.Zero());
-        camera.attachControl(canvas, true);
-
-        camera.onAfterCheckInputsObservable.add(() => {
-            camera!.wheelPrecision = 150 / camera!.radius;
-            camera!.panningSensibility = 10000 / camera!.radius;
-        });
-
-        const light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
-        light.intensity = 1;
-        light.diffuse = new BABYLON.Color3(1, 1, 1);
-        light.groundColor = new BABYLON.Color3(0.3, 0.3, 0.3);
-
-        const sun = new BABYLON.DirectionalLight("sun", new BABYLON.Vector3(-0.5, -1, -0.5), scene);
-        sun.intensity = 2;
-        sun.diffuse = new BABYLON.Color3(1, 1, 1);
-
-        const standardSize = 10;
-        let scaleFactor = 1;
-        let center = BABYLON.Vector3.Zero();
-
-        if (scene.meshes.length > 0) {
-            let bounds = scene.meshes[0].getBoundingInfo().boundingBox;
-            let min = bounds.minimumWorld;
-            let max = bounds.maximumWorld;
-
-            for (let i = 1; i < scene.meshes.length; i++) {
-                bounds = scene.meshes[i].getBoundingInfo().boundingBox;
-                min = BABYLON.Vector3.Minimize(min, bounds.minimumWorld);
-                max = BABYLON.Vector3.Maximize(max, bounds.maximumWorld);
-            }
-
-            const extent = max.subtract(min).scale(0.5);
-            const size = extent.length();
-
-            center = BABYLON.Vector3.Center(min, max);
-
-            scaleFactor = standardSize / size;
-        }
-
-        const parentNode = new BABYLON.TransformNode("parent", scene);
-
-        let totalTriangles = 0;
-        scene.meshes.forEach((mesh) => {
-            mesh.setParent(parentNode);
-            if (mesh.getTotalVertices() > 0) {
-                totalTriangles += mesh.getTotalIndices() / 3;
-            }
-        });
-        triangleCount!.textContent = totalTriangles.toLocaleString();
-
-        parentNode.position = center.scale(-1 * scaleFactor);
-        parentNode.scaling.scaleInPlace(scaleFactor);
-
-        engine.runRenderLoop(() => {
-            scene!.render();
-            if (fpsCount) {
-                fpsCount.textContent = engine!.getFps().toFixed();
-            }
-        });
-
+        handleMobileView();
+        await loadModel(data.scene.url);
         window.addEventListener("resize", () => {
             updateCanvasSize();
-            engine!.resize();
+        });
+        updateStats();
+        setInterval(updateStats, 1000);
+    }
+
+    function destroyViewer() {
+        document.body.classList.remove("viewer");
+    }
+
+    function handleMobileView() {
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) toggleHUD();
+    }
+
+    function toggleHUD() {
+        collapsed = !collapsed;
+        hudToggleBtn.textContent = collapsed ? ")" : "(";
+        if (collapsed) {
+            container.classList.remove("hud-expanded");
+        } else {
+            container.classList.add("hud-expanded");
+        }
+    }
+
+    function setRenderMode(event: PointerEvent) {
+        const babylonViewer = viewer as BabylonViewer;
+        if (!babylonViewer) {
+            console.error("Can only set render mode for BabylonViewer");
+            return;
+        }
+
+        document.querySelectorAll(".mode-item").forEach((item) => {
+            item.classList.remove("active");
         });
 
+        const modeItem = event.currentTarget as HTMLElement;
+        modeItem.classList.add("active");
+
+        const mode = modeItem.dataset.mode as string;
+        babylonViewer.setRenderMode(mode);
+    }
+
+    async function loadModel(url: string) {
+        overlay.style.display = "flex";
+        await viewer.loadModel(url, (progress) => {
+            loadingBarFill.style.width = `${progress * 100}%`;
+        });
         updateCanvasSize();
-        overlay!.style.display = "none";
+        overlay.style.display = "none";
     }
 
     function updateCanvasSize() {
@@ -185,17 +101,20 @@
         canvas.height = container.clientHeight;
     }
 
-    function capture() {
-        if (!engine || !camera) return;
-        const cachedColor = scene!.clearColor;
-        scene!.clearColor = BABYLON.Color4.FromHexString("#00000000");
-        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, 512, (data) => {
-            const a = document.createElement("a");
-            a.href = data;
-            a.download = "screenshot.png";
-            a.click();
-        });
-        scene!.clearColor = cachedColor;
+    async function capture() {
+        const data = await viewer.capture();
+        if (!data) {
+            console.error("Failed to capture screenshot");
+            return;
+        }
+        const a = document.createElement("a");
+        a.href = data;
+        a.download = "screenshot.png";
+        a.click();
+    }
+
+    function updateStats() {
+        stats = viewer.getStats();
     }
 
     function exit() {
@@ -211,8 +130,8 @@
     </div>
     <canvas bind:this={canvas} width="512" height="512" />
     <div class="exit-button" on:pointerdown={exit}>x</div>
-    <div bind:this={hud} class="hud" class:collapsed>
-        <button bind:this={hudToggleBtn} class="hud-toggle-btn">(</button>
+    <div class="hud" class:collapsed>
+        <button bind:this={hudToggleBtn} on:click={toggleHUD} class="hud-toggle-btn">(</button>
         <div class="section">
             <div class="title">{data.scene.title}</div>
         </div>
@@ -221,21 +140,18 @@
             <div class="info-panel">
                 {#if data.scene.model}
                     <a href={`/models/${data.scene.model}`} class="section-label">{data.model.title}</a>
+                    {#if data.scene.pipeline}
+                        <ol class="pipeline">
+                            {#each data.scene.pipeline as step}
+                                <li>{step}</li>
+                            {/each}
+                        </ol>
+                    {/if}
                 {:else}
                     <div class="section-label">None</div>
                 {/if}
             </div>
         </div>
-        {#if data.scene.pipeline}
-            <div class="section">
-                <div class="section-title">Pipeline</div>
-                <div class="info-panel">
-                    {#each data.scene.pipeline as step}
-                        <div class="section-label">{step}</div>
-                    {/each}
-                </div>
-            </div>
-        {/if}
         {#if data.scene.prompt}
             <div class="section">
                 <div class="section-title">Prompt</div>
@@ -244,20 +160,25 @@
                 </div>
             </div>
         {/if}
-        <div class="section">
-            <div class="section-title">Stats</div>
-            <div class="info-panel">
-                <div>FPS: <span bind:this={fpsCount}>0</span></div>
-                <div>Triangles: <span bind:this={triangleCount}>0</span></div>
+        {#if stats.length > 0}
+            <div class="section">
+                <div class="section-title">Stats</div>
+                <div class="info-panel">
+                    {#each stats as stat}
+                        <div>{stat.name}: {stat.value}</div>
+                    {/each}
+                </div>
             </div>
-        </div>
-        <div class="section">
-            <div class="section-title">Render Mode</div>
-            <div class="button-group mode-list">
-                <div class="hud-button mode-item active" data-mode="rendered">Rendered</div>
-                <div class="hud-button mode-item" data-mode="wireframe">Wireframe</div>
+        {/if}
+        {#if data.scene.type === "mesh"}
+            <div class="section">
+                <div class="section-title">Render Mode</div>
+                <div class="button-group mode-list">
+                    <div on:pointerdown={setRenderMode} class="hud-button mode-item active" data-mode="rendered">Rendered</div>
+                    <div on:pointerdown={setRenderMode} class="hud-button mode-item" data-mode="wireframe">Wireframe</div>
+                </div>
             </div>
-        </div>
+        {/if}
         <div class="section">
             <div class="section-title">Actions</div>
             <div class="button-group">
@@ -409,8 +330,13 @@
     }
 
     .info-panel {
-        padding: 10px 10px 0px 10px;
+        padding: 6px 10px 0px 10px;
         color: #ddd;
+    }
+
+    .pipeline {
+        margin: 0;
+        padding: 6px 10px 0px 20px;
     }
 
     .button-group {
