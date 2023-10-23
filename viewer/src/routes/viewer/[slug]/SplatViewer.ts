@@ -759,6 +759,9 @@ export class SplatViewer implements IViewer {
         document.addEventListener("dragleave", preventDefault);
         document.addEventListener("contextmenu", preventDefault);
 
+        this.handleTouchStart = this.handleTouchStart.bind(this);
+        this.handleTouchEnd = this.handleTouchEnd.bind(this);
+        this.handleTouchMove = this.handleTouchMove.bind(this);
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -766,6 +769,9 @@ export class SplatViewer implements IViewer {
         this.handleDrop = this.handleDrop.bind(this);
         this.handleResize = this.handleResize.bind(this);
 
+        this.canvas.addEventListener("touchstart", this.handleTouchStart);
+        this.canvas.addEventListener("touchend", this.handleTouchEnd);
+        this.canvas.addEventListener("touchmove", this.handleTouchMove);
         this.canvas.addEventListener("mousedown", this.handleMouseDown);
         this.canvas.addEventListener("mouseup", this.handleMouseUp);
         this.canvas.addEventListener("mousemove", this.handleMouseMove);
@@ -828,6 +834,39 @@ export class SplatViewer implements IViewer {
                 vertexCount: Math.floor(bytesRead / rowLength),
             });
         }
+    }
+
+    handleTouchStart(e: TouchEvent) {
+        e.preventDefault();
+        this.dragging = true;
+        this.panning = e.touches.length === 2;
+        this.lastX = e.touches[0].clientX;
+        this.lastY = e.touches[0].clientY;
+    }
+
+    handleTouchEnd(e: TouchEvent) {
+        e.preventDefault();
+        this.dragging = false;
+        this.panning = false;
+    }
+
+    handleTouchMove(e: TouchEvent) {
+        e.preventDefault();
+        if (!this.dragging) return;
+        const dx = e.touches[0].clientX - this.lastX;
+        const dy = e.touches[0].clientY - this.lastY;
+        const zoomNorm = this.camera.getZoomNorm();
+
+        if (this.panning) {
+            this.camera.pan(-dx * this.camera.panSpeed * zoomNorm, -dy * this.camera.panSpeed * zoomNorm);
+        } else {
+            this.camera.desiredAlpha -= dx * this.camera.orbitSpeed;
+            this.camera.desiredBeta += dy * this.camera.orbitSpeed;
+            this.camera.desiredBeta = Math.min(Math.max(this.camera.desiredBeta, this.camera.minBeta), this.camera.maxBeta);
+        }
+
+        this.lastX = e.touches[0].clientX;
+        this.lastY = e.touches[0].clientY;
     }
 
     handleMouseDown(e: MouseEvent) {
@@ -946,6 +985,9 @@ export class SplatViewer implements IViewer {
         document.removeEventListener("dragleave", preventDefault);
         document.removeEventListener("contextmenu", preventDefault);
 
+        this.canvas.removeEventListener("touchstart", this.handleTouchStart);
+        this.canvas.removeEventListener("touchend", this.handleTouchEnd);
+        this.canvas.removeEventListener("touchmove", this.handleTouchMove);
         this.canvas.removeEventListener("mousedown", this.handleMouseDown);
         this.canvas.removeEventListener("mouseup", this.handleMouseUp);
         this.canvas.removeEventListener("mousemove", this.handleMouseMove);
