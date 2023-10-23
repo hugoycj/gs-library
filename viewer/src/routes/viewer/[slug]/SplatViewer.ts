@@ -860,8 +860,8 @@ export class SplatViewer implements IViewer {
         if (this.panning) {
             this.camera.pan(-dx * this.camera.panSpeed * zoomNorm, -dy * this.camera.panSpeed * zoomNorm);
         } else {
-            this.camera.desiredAlpha -= dx * this.camera.orbitSpeed;
-            this.camera.desiredBeta += dy * this.camera.orbitSpeed;
+            this.camera.desiredAlpha += dx * this.camera.orbitSpeed;
+            this.camera.desiredBeta -= dy * this.camera.orbitSpeed;
             this.camera.desiredBeta = Math.min(Math.max(this.camera.desiredBeta, this.camera.minBeta), this.camera.maxBeta);
         }
 
