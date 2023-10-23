@@ -548,6 +548,7 @@ export class SplatViewer implements IViewer {
     vertexCount: number;
     worker: Worker;
 
+    projectionMatrix: number[];
     vertexShader: WebGLShader;
     fragmentShader: WebGLShader;
     program: WebGLProgram;
@@ -592,7 +593,7 @@ export class SplatViewer implements IViewer {
         this.canvas.height = innerHeight;
         this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 
-        let projectionMatrix = getProjectionMatrix(
+        this.projectionMatrix = getProjectionMatrix(
             this.camera.fx,
             this.camera.fy,
             this.canvas.width,
@@ -643,7 +644,7 @@ export class SplatViewer implements IViewer {
 
         // projection
         const u_projection = this.gl.getUniformLocation(this.program, "projection");
-        this.gl.uniformMatrix4fv(u_projection, false, projectionMatrix);
+        this.gl.uniformMatrix4fv(u_projection, false, this.projectionMatrix);
 
         // viewport
         const u_viewport = this.gl.getUniformLocation(this.program, "viewport");
@@ -736,7 +737,7 @@ export class SplatViewer implements IViewer {
             this.camera.update();
             viewMatrix = getViewMatrix(this.camera);
 
-            const viewProj = multiply4(projectionMatrix, viewMatrix);
+            const viewProj = multiply4(this.projectionMatrix, viewMatrix);
             this.worker.postMessage({ view: viewProj });
 
             if (vertexCount > 0) {
@@ -888,6 +889,20 @@ export class SplatViewer implements IViewer {
         this.canvas.width = innerWidth;
         this.canvas.height = innerHeight;
         this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+
+        const aspectRatio = this.canvas.width / this.canvas.height;
+        this.projectionMatrix = getProjectionMatrix(
+            this.camera.fx,
+            this.camera.fy,
+            this.canvas.width,
+            this.canvas.height,
+        );
+
+        const u_projection = this.gl.getUniformLocation(this.program, "projection");
+        this.gl.uniformMatrix4fv(u_projection, false, this.projectionMatrix);
+
+        const u_viewport = this.gl.getUniformLocation(this.program, "viewport");
+        this.gl.uniform2fv(u_viewport, new Float32Array([this.canvas.width, this.canvas.height]));
     }
 
     dispose() {
@@ -940,8 +955,25 @@ export class SplatViewer implements IViewer {
         window.removeEventListener("resize", this.handleResize);
     }
 
-    async capture() {
-        return null;
+    async capture(): Promise<string | null> {
+        return new Promise((resolve) => {
+            requestAnimationFrame(() => {
+                const offscreenCanvas = document.createElement("canvas");
+                offscreenCanvas.width = 512;
+                offscreenCanvas.height = 512;
+                const offscreenContext = offscreenCanvas.getContext("2d")!;
+
+                const x = (this.canvas.width - offscreenCanvas.width) / 2;
+                const y = (this.canvas.height - offscreenCanvas.height) / 2;
+
+                offscreenContext.drawImage(this.canvas, x, y, offscreenCanvas.width, offscreenCanvas.height, 0, 0, offscreenCanvas.width, offscreenCanvas.height);
+                const dataURL = offscreenCanvas.toDataURL("image/png");
+                offscreenCanvas.remove();
+
+                resolve(dataURL);
+            });
+        });
+
     }
 
     getStats(): { name: string, value: any }[] {

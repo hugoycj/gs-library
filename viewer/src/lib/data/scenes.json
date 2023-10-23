@@ -1,5 +1,105 @@
 [
     {
+        "slug": "3dgs-bicycle",
+        "model": "3dgs",
+        "title": "Bicycle",
+        "type": "splat",
+        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/bicycle/bicycle-7k.splat",
+        "pipeline": [
+            "Gaussian Splatting"
+        ]
+    },
+    {
+        "slug": "3dgs-bonsai",
+        "model": "3dgs",
+        "title": "Bonsai",
+        "type": "splat",
+        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/bonsai/bonsai-7k.splat",
+        "pipeline": [
+            "Gaussian Splatting"
+        ]
+    },
+    {
+        "slug": "3dgs-counter",
+        "model": "3dgs",
+        "title": "Counter",
+        "type": "splat",
+        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/counter/counter-7k.splat",
+        "pipeline": [
+            "Gaussian Splatting"
+        ]
+    },
+    {
+        "slug": "3dgs-flowers",
+        "model": "3dgs",
+        "title": "Flowers",
+        "type": "splat",
+        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/flowers/flowers-7k.splat",
+        "pipeline": [
+            "Gaussian Splatting"
+        ]
+    },
+    {
+        "slug": "3dgs-garden",
+        "model": "3dgs",
+        "title": "Garden",
+        "type": "splat",
+        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/garden/garden-7k.splat",
+        "pipeline": [
+            "Gaussian Splatting"
+        ]
+    },
+    {
+        "slug": "3dgs-kitchen",
+        "model": "3dgs",
+        "title": "Kitchen",
+        "type": "splat",
+        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/kitchen/kitchen-7k.splat",
+        "pipeline": [
+            "Gaussian Splatting"
+        ]
+    },
+    {
+        "slug": "3dgs-playroom",
+        "model": "3dgs",
+        "title": "Playroom",
+        "type": "splat",
+        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/playroom/playroom-7k.splat",
+        "pipeline": [
+            "Gaussian Splatting"
+        ]
+    },
+    {
+        "slug": "3dgs-room",
+        "model": "3dgs",
+        "title": "Room",
+        "type": "splat",
+        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/room/room-7k.splat",
+        "pipeline": [
+            "Gaussian Splatting"
+        ]
+    },
+    {
+        "slug": "3dgs-stump",
+        "model": "3dgs",
+        "title": "Stump",
+        "type": "splat",
+        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/stump/stump-7k.splat",
+        "pipeline": [
+            "Gaussian Splatting"
+        ]
+    },
+    {
+        "slug": "3dgs-treehill",
+        "model": "3dgs",
+        "title": "Treehill",
+        "type": "splat",
+        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/treehill/treehill-7k.splat",
+        "pipeline": [
+            "Gaussian Splatting"
+        ]
+    },
+    {
         "slug": "sync-dreamer-armor",
         "model": "sync-dreamer",
         "title": "armor",
@@ -170,16 +270,6 @@
         "pipeline": [
             "Multi-view Diffusion",
             "Marching Cubes"
-        ]
-    },
-    {
-        "slug": "3dgs-stump",
-        "model": "3dgs",
-        "title": "Stump",
-        "type": "splat",
-        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/stump/stump-7k.splat",
-        "pipeline": [
-            "Gaussian Splatting"
         ]
     }
 ]
