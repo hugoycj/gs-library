@@ -177,7 +177,7 @@
         "model": "3dgs",
         "title": "Stump",
         "type": "splat",
-        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/stump/point_cloud/iteration_7000/point_cloud.ply",
+        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/stump/stump-7k.splat",
         "pipeline": [
             "Gaussian Splatting"
         ]

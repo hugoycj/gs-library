@@ -33,9 +33,12 @@ export class BabylonViewer implements IViewer {
             this.camera.panningSensibility = 10000 / this.camera.radius;
         });
 
-        window.addEventListener("resize", () => {
-            this.engine.resize();
-        });
+        this.handleResize = this.handleResize.bind(this);
+        window.addEventListener("resize", this.handleResize);
+    }
+
+    handleResize() {
+        this.engine.resize();
     }
 
     async loadModel(url: string, loadingBarCallback?: (progress: number) => void) {
@@ -108,6 +111,10 @@ export class BabylonViewer implements IViewer {
         if (this.scene) {
             this.scene.dispose();
         }
+        if (this.engine) {
+            this.engine.dispose();
+        }
+        window.removeEventListener("resize", this.handleResize);
     }
 
     async capture(): Promise<string | null> {

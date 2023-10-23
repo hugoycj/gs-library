@@ -51,6 +51,7 @@
 
     function destroyViewer() {
         document.body.classList.remove("viewer");
+        viewer.dispose();
     }
 
     function handleMobileView() {
