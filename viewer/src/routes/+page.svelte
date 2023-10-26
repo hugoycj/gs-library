@@ -8,10 +8,11 @@
     }
 </script>
 
-<div class="banner">
-    <h1 on:pointerdown={goHome}>IGF</h1>
-</div>
 <div class="container">
+    <div on:pointerdown={goHome} class="banner">
+        <h1>IGF</h1>
+        <p>Comparative 3D Research Browser</p>
+    </div>
     <div class="tabs">
         <button on:click={() => activeTab.set("Models")} class={$activeTab === "Models" ? "active" : ""}>Models</button>
         <button on:click={() => activeTab.set("Scenes")} class={$activeTab === "Scenes" ? "active" : ""}>Scenes</button>

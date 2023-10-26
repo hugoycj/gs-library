@@ -24,10 +24,11 @@
     }
 </script>
 
-<div class="banner">
-    <h1 on:pointerdown={goHome}>IGF</h1>
-</div>
 <div class="container">
+    <div on:pointerdown={goHome} class="banner">
+        <h1>IGF</h1>
+        <p>Comparative 3D Research Browser</p>
+    </div>
     <div class="header">{data.model.title}</div>
     <div class="model-container">
         <div class="model-info">
