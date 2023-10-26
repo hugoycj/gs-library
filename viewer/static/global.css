@@ -22,12 +22,14 @@ body {
 .banner h1 {
     padding: 0;
     margin: 20px 0 0 0;
+    cursor: pointer;
 }
 
 .banner p {
     padding: 0;
-    margin: 5px 0 20px 0;
+    margin: 4px 0 20px 0;
     color: #aaa;
+    cursor: pointer;
 }
 
 .container {
