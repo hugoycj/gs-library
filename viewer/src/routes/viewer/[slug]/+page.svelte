@@ -41,7 +41,7 @@
             console.error(`Unsupported scene type: ${data.scene.type}`);
         }
         handleMobileView();
-        await loadModel(data.scene.url);
+        await loadScene(data.scene.url);
         window.addEventListener("resize", () => {
             updateCanvasSize();
         });
@@ -87,9 +87,9 @@
         babylonViewer.setRenderMode(mode);
     }
 
-    async function loadModel(url: string) {
+    async function loadScene(url: string) {
         overlay.style.display = "flex";
-        await viewer.loadModel(url, (progress) => {
+        await viewer.loadScene(url, (progress) => {
             loadingBarFill.style.width = `${progress * 100}%`;
         });
         updateCanvasSize();

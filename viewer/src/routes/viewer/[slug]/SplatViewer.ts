@@ -1,4 +1,5 @@
 import type { IViewer } from "./IViewer";
+import * as SPLAT from "$lib/splat.js";
 
 class OrbitCamera {
     position: number[];
@@ -789,7 +790,7 @@ export class SplatViewer implements IViewer {
         return gl as WebGLRenderingContext;
     }
 
-    async loadModel(url: string, loadingBarCallback?: (progress: number) => void) {
+    async loadScene(url: string, loadingBarCallback?: (progress: number) => void) {
         const req = await fetch(url, {
             mode: "cors",
             credentials: "omit",

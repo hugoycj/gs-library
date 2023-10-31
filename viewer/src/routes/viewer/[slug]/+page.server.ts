@@ -1,5 +1,5 @@
 import { error } from "@sveltejs/kit";
-import { getModels, getScenes } from "$lib/dataLoader";
+import { getModels, getScenes } from "$lib/data/dataLoader";
 
 export async function load({ params }) {
     const models = await getModels();

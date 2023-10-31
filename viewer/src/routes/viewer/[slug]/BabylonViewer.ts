@@ -41,7 +41,7 @@ export class BabylonViewer implements IViewer {
         this.engine.resize();
     }
 
-    async loadModel(url: string, loadingBarCallback?: (progress: number) => void) {
+    async loadScene(url: string, loadingBarCallback?: (progress: number) => void) {
         // Load scene
         await BABYLON.SceneLoader.AppendAsync("", url, this.scene, (event) => {
             const progress = event.loaded / event.total;

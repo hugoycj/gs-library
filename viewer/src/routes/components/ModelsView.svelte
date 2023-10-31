@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { getModels, getScenes } from "$lib/dataLoader";
+    import { getModels, getScenes } from "$lib/data/dataLoader";
     import placeholderImage from "$lib/placeholder.png";
 
     let models: any[] = [];
