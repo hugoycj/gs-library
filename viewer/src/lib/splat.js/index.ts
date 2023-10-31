@@ -1,4 +1,4 @@
-export * from "./core/Camera";
+export * from "./cameras/Camera";
 export * from "./core/Renderer";
 
 export * from "./loaders/Loader";

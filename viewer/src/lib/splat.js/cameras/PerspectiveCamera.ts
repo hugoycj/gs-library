@@ -1,4 +1,4 @@
-import { Camera } from "../core/Camera";
+import { Camera } from "./Camera";
 import { Matrix4 } from "../math/Matrix4";
 
 export class PerspectiveCamera extends Camera {
@@ -8,8 +8,6 @@ export class PerspectiveCamera extends Camera {
     near: number;
     far: number;
 
-    projectionMatrix: Matrix4;
-
     constructor(fx: number = 1132, fy: number = 1132, near: number = 0.1, far: number = 100) {
         super();
 
@@ -17,8 +15,6 @@ export class PerspectiveCamera extends Camera {
         this.fy = fy;
         this.near = near;
         this.far = far;
-
-        this.projectionMatrix = new Matrix4();
     }
 
     updateProjectionMatrix(width: number, height: number): void {

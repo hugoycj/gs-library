@@ -1,4 +1,4 @@
-import type { Camera } from "../core/Camera";
+import type { Camera } from "../cameras/Camera";
 import type { Renderer } from "../core/Renderer";
 
 export class WebGLRenderer implements Renderer {
@@ -10,4 +10,8 @@ export class WebGLRenderer implements Renderer {
     }
 
     render(camera: Camera): void {}
+
+    setData(data: Uint8Array): void {
+        console.log("setData", data);
+    }
 }

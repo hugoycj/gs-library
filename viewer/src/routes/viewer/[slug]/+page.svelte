@@ -2,7 +2,7 @@
     import { onMount, onDestroy } from "svelte";
     import type { IViewer } from "./IViewer";
     import { BabylonViewer } from "./BabylonViewer";
-    import { SplatViewer } from "./SplatViewer.Legacy";
+    import { SplatViewer } from "./SplatViewer";
 
     export let data: {
         scene: {
