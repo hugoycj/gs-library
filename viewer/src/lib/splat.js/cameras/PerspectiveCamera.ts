@@ -1,5 +1,5 @@
-import { Camera } from '../core/Camera';
-import { Matrix4 } from '../math/Matrix4';
+import { Camera } from "../core/Camera";
+import { Matrix4 } from "../math/Matrix4";
 
 export class PerspectiveCamera extends Camera {
     fx: number;
@@ -21,7 +21,8 @@ export class PerspectiveCamera extends Camera {
         this.projectionMatrix = new Matrix4();
     }
 
-    updateProjectionMatrix(width: number, height: number) : void {
+    updateProjectionMatrix(width: number, height: number): void {
+        // prettier-ignore
         this.projectionMatrix.set(
             2 * this.fx / width, 0, 0, 0,
             0, -2 * this.fy / height, 0, 0,

@@ -1,5 +1,4 @@
-import { Object3D } from './Object3D';
-import { Matrix4 } from '../math/Matrix4';
+import { Object3D } from "./Object3D";
 
 export class Camera extends Object3D {
     constructor() {

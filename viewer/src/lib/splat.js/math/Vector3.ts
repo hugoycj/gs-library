@@ -9,7 +9,7 @@ export class Vector3 {
         this.z = z;
     }
 
-    set(x: number, y: number, z: number) : Vector3 {
+    set(x: number, y: number, z: number): Vector3 {
         this.x = x;
         this.y = y;
         this.z = z;

@@ -9,6 +9,6 @@ export async function load({ params }) {
 
     return {
         model: model,
-        scenes: modelScenes
+        scenes: modelScenes,
     };
 }

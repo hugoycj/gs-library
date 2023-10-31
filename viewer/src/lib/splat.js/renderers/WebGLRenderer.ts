@@ -1,9 +1,13 @@
-import type { Scene } from '../core/Scene';
-import type { Camera } from '../core/Camera';
-import type { Renderer } from '../core/Renderer';
+import type { Camera } from "../core/Camera";
+import type { Renderer } from "../core/Renderer";
 
 export class WebGLRenderer implements Renderer {
-    render(scene: Scene, camera: Camera): void {
-        
+    canvas: HTMLCanvasElement;
+
+    constructor(canvas?: HTMLCanvasElement) {
+        this.canvas =
+            canvas ?? (document.createElementNS("http://www.w3.org/1999/xhtml", "canvas") as HTMLCanvasElement);
     }
+
+    render(camera: Camera): void {}
 }

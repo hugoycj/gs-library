@@ -1,6 +1,7 @@
 export class Matrix4 {
     elements: number[];
 
+    // prettier-ignore
     constructor(n11: number = 1, n12: number = 0, n13: number = 0, n14: number = 0, 
                 n21: number = 0, n22: number = 1, n23: number = 0, n24: number = 0, 
                 n31: number = 0, n32: number = 0, n33: number = 1, n34: number = 0, 
@@ -15,6 +16,7 @@ export class Matrix4 {
         );
     }
 
+    // prettier-ignore
     set(n11: number, n12: number, n13: number, n14: number,
         n21: number, n22: number, n23: number, n24: number,
         n31: number, n32: number, n33: number, n34: number,

@@ -2,7 +2,7 @@
     import { onMount, onDestroy } from "svelte";
     import type { IViewer } from "./IViewer";
     import { BabylonViewer } from "./BabylonViewer";
-    import { SplatViewer } from "./SplatViewer";
+    import { SplatViewer } from "./SplatViewer.Legacy";
 
     export let data: {
         scene: {
@@ -175,8 +175,12 @@
             <div class="section">
                 <div class="section-title">Render Mode</div>
                 <div class="button-group mode-list">
-                    <div on:pointerdown={setRenderMode} class="hud-button mode-item active" data-mode="rendered">Rendered</div>
-                    <div on:pointerdown={setRenderMode} class="hud-button mode-item" data-mode="wireframe">Wireframe</div>
+                    <div on:pointerdown={setRenderMode} class="hud-button mode-item active" data-mode="rendered">
+                        Rendered
+                    </div>
+                    <div on:pointerdown={setRenderMode} class="hud-button mode-item" data-mode="wireframe">
+                        Wireframe
+                    </div>
                 </div>
             </div>
         {/if}

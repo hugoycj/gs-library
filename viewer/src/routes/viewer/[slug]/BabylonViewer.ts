@@ -1,5 +1,5 @@
 import type { IViewer } from "./IViewer";
-import * as BABYLON from '@babylonjs/core';
+import * as BABYLON from "@babylonjs/core";
 import "@babylonjs/loaders/glTF";
 import "@babylonjs/loaders/OBJ";
 
@@ -18,7 +18,14 @@ export class BabylonViewer implements IViewer {
         this.scene = new BABYLON.Scene(this.engine);
         this.scene.clearColor = BABYLON.Color4.FromHexString("#1A1B1EFF");
 
-        this.camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 3, Math.PI / 3, 30, BABYLON.Vector3.Zero(), this.scene);
+        this.camera = new BABYLON.ArcRotateCamera(
+            "camera",
+            Math.PI / 3,
+            Math.PI / 3,
+            30,
+            BABYLON.Vector3.Zero(),
+            this.scene
+        );
         this.camera.angularSensibilityY = 1000;
         this.camera.panningSensibility = 500;
         this.camera.wheelPrecision = 5;
@@ -134,7 +141,7 @@ export class BabylonViewer implements IViewer {
         this.scene.forceWireframe = mode === "wireframe";
     }
 
-    getStats(): { name: string, value: any }[] {
+    getStats(): { name: string; value: any }[] {
         const fps = this.engine.getFps().toFixed();
         const triangleCount = this.triangleCount.toLocaleString();
         return [

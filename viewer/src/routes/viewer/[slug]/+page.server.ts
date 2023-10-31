@@ -12,6 +12,6 @@ export async function load({ params }) {
 
     return {
         scene: scene,
-        model: model
+        model: model,
     };
 }

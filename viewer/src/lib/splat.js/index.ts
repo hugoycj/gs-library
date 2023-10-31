@@ -1,8 +1,10 @@
-export * from './core/Camera';
-export * from './core/Renderer';
-export * from './core/Scene';
+export * from "./core/Camera";
+export * from "./core/Renderer";
 
-export * from './renderers/WebGLRenderer';
+export * from "./loaders/Loader";
 
-export * from './math/Quaternion';
-export * from './math/Vector3';
+export * from "./renderers/WebGLRenderer";
+
+export * from "./math/Quaternion";
+export * from "./math/Vector3";
+export * from "./math/Matrix4";

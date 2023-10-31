@@ -11,7 +11,7 @@ export class Quaternion {
         this.w = w;
     }
 
-    set(x: number, y: number, z: number, w: number) : Quaternion {
+    set(x: number, y: number, z: number, w: number): Quaternion {
         this.x = x;
         this.y = y;
         this.z = z;
