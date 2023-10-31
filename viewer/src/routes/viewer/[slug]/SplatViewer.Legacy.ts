@@ -639,9 +639,9 @@ export class SplatViewer implements IViewer {
         this.vertexBuffer = this.gl.createBuffer();
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexBuffer);
         this.gl.bufferData(this.gl.ARRAY_BUFFER, triangleVertices, this.gl.STATIC_DRAW);
+
         this.a_position = this.gl.getAttribLocation(this.program, "position");
         this.gl.enableVertexAttribArray(this.a_position);
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexBuffer);
         this.gl.vertexAttribPointer(this.a_position, 2, this.gl.FLOAT, false, 0, 0);
 
         // center
@@ -674,6 +674,8 @@ export class SplatViewer implements IViewer {
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.covBBuffer);
         this.gl.vertexAttribPointer(this.a_covB, 3, this.gl.FLOAT, false, 0, 0);
         this.ext.vertexAttribDivisorANGLE(this.a_covB, 1); // Use the extension here
+
+        console.log(this.vertexBuffer, this.centerBuffer, this.colorBuffer, this.covABuffer, this.covBBuffer);
 
         this.worker.onmessage = (e) => {
             if (e.data.buffer) {
@@ -916,7 +918,6 @@ export class SplatViewer implements IViewer {
         this.canvas.height = innerHeight;
         this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 
-        const aspectRatio = this.canvas.width / this.canvas.height;
         this.projectionMatrix = getProjectionMatrix(
             this.camera.fx,
             this.camera.fy,

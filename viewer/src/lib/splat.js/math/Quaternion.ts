@@ -19,6 +19,10 @@ class Quaternion {
 
         return this;
     }
+
+    flat(): number[] {
+        return [this.x, this.y, this.z, this.w];
+    }
 }
 
 export { Quaternion };

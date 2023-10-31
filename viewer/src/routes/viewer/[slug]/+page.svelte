@@ -3,6 +3,7 @@
     import type { IViewer } from "./IViewer";
     import { BabylonViewer } from "./BabylonViewer";
     import { SplatViewer } from "./SplatViewer";
+    // import { SplatViewer } from "./SplatViewer.Legacy";
 
     export let data: {
         scene: {

@@ -27,7 +27,10 @@ class Loader {
             onProgress?.(bytesRead / contentLength);
         }
 
-        scene.setData(data);
+        const rowLength = 3 * 4 + 3 * 4 + 4 + 4;
+        const vertexCount = data.length / rowLength;
+
+        scene.setData(data, vertexCount);
     }
 }
 

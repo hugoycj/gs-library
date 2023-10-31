@@ -1,4 +1,5 @@
 export { Camera } from "./cameras/Camera";
+export { PerspectiveCamera } from "./cameras/PerspectiveCamera";
 export { Renderer } from "./renderers/Renderer";
 export { Scene } from "./core/Scene";
 

@@ -16,6 +16,10 @@ class Vector3 {
 
         return this;
     }
+
+    flat(): number[] {
+        return [this.x, this.y, this.z];
+    }
 }
 
 export { Vector3 };
