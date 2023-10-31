@@ -1,7 +1,7 @@
-import type { Renderer } from "../core/Renderer";
+import type { Scene } from "../core/Scene";
 
-export class Loader {
-    static async LoadAsync(url: string, renderer: Renderer, onProgress?: (progress: number) => void): Promise<void> {
+class Loader {
+    static async LoadAsync(url: string, scene: Scene, onProgress?: (progress: number) => void): Promise<void> {
         const req = await fetch(url, {
             mode: "cors",
             credentials: "omit",
@@ -27,6 +27,8 @@ export class Loader {
             onProgress?.(bytesRead / contentLength);
         }
 
-        renderer.setData(data);
+        scene.setData(data);
     }
 }
+
+export { Loader };

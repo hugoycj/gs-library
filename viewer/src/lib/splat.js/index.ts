@@ -1,10 +1,11 @@
-export * from "./cameras/Camera";
-export * from "./core/Renderer";
+export { Camera } from "./cameras/Camera";
+export { Renderer } from "./renderers/Renderer";
+export { Scene } from "./core/Scene";
 
-export * from "./loaders/Loader";
+export { Loader } from "./loaders/Loader";
 
-export * from "./renderers/WebGLRenderer";
+export { WebGLRenderer } from "./renderers/WebGLRenderer";
 
-export * from "./math/Quaternion";
-export * from "./math/Vector3";
-export * from "./math/Matrix4";
+export { Quaternion } from "./math/Quaternion";
+export { Vector3 } from "./math/Vector3";
+export { Matrix4 } from "./math/Matrix4";

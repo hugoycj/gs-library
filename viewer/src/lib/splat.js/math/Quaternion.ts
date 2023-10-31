@@ -1,4 +1,4 @@
-export class Quaternion {
+class Quaternion {
     x: number;
     y: number;
     z: number;
@@ -20,3 +20,5 @@ export class Quaternion {
         return this;
     }
 }
+
+export { Quaternion };

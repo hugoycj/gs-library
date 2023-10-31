@@ -1,4 +1,4 @@
-export class Matrix4 {
+class Matrix4 {
     elements: number[];
 
     // prettier-ignore
@@ -31,3 +31,5 @@ export class Matrix4 {
         return this;
     }
 }
+
+export { Matrix4 };

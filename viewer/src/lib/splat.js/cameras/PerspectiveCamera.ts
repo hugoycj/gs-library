@@ -1,7 +1,6 @@
 import { Camera } from "./Camera";
-import { Matrix4 } from "../math/Matrix4";
 
-export class PerspectiveCamera extends Camera {
+class PerspectiveCamera extends Camera {
     fx: number;
     fy: number;
 
@@ -27,3 +26,5 @@ export class PerspectiveCamera extends Camera {
         );
     }
 }
+
+export { PerspectiveCamera };

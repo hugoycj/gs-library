@@ -1,4 +1,4 @@
-export class Vector3 {
+class Vector3 {
     x: number;
     y: number;
     z: number;
@@ -17,3 +17,5 @@ export class Vector3 {
         return this;
     }
 }
+
+export { Vector3 };
