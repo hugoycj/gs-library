@@ -23,6 +23,7 @@
   "type": "module",
   "dependencies": {
     "@babylonjs/core": "^6.23.0",
-    "@babylonjs/loaders": "^6.23.0"
+    "@babylonjs/loaders": "^6.23.0",
+    "gsplat": "^0.1.0"
   }
 }

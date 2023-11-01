@@ -1,10 +1,10 @@
 import type { IViewer } from "./IViewer";
-import * as SPLAT from "$lib/splat.js";
+import * as SPLAT from "gsplat";
 
 export class SplatViewer implements IViewer {
     canvas: HTMLCanvasElement;
 
-    renderer: SPLAT.Renderer;
+    renderer: SPLAT.WebGLRenderer;
     scene: SPLAT.Scene;
     camera: SPLAT.Camera;
     controls: SPLAT.OrbitControls;
