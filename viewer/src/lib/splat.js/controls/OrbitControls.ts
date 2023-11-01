@@ -1,23 +1,8 @@
 import type { Camera } from "../cameras/Camera";
-import { EventDispatcher } from "../core/EventDispatcher";
 import { Matrix3 } from "../math/Matrix3";
-import { Quaternion } from "../math/Quaternion";
 import { Vector3 } from "../math/Vector3";
 
-class OrbitControls extends EventDispatcher {
-    camera: Camera;
-    domElement: HTMLElement;
-
-    target: Vector3 = new Vector3();
-    alpha: number = 0;
-    beta: number = 0;
-    radius: number = 5;
-
-    desiredTarget: Vector3;
-    desiredAlpha: number;
-    desiredBeta: number;
-    desiredRadius: number;
-
+class OrbitControls {
     minBeta: number = (5 * Math.PI) / 180;
     maxBeta: number = (85 * Math.PI) / 180;
     minZoom: number = 0.1;
@@ -27,45 +12,124 @@ class OrbitControls extends EventDispatcher {
     zoomSpeed: number = 1;
     dampening: number = 0.3;
 
+    update: () => void;
+    dispose: () => void;
+
     constructor(camera: Camera, domElement: HTMLElement) {
-        super();
+        let target = new Vector3();
+        let alpha = 0;
+        let beta = 0;
+        let radius = 5;
 
-        this.camera = camera;
-        this.domElement = domElement;
+        let desiredTarget = target.clone();
+        let desiredAlpha = alpha;
+        let desiredBeta = beta;
+        let desiredRadius = radius;
 
-        this.desiredTarget = this.target.clone();
-        this.desiredAlpha = this.alpha;
-        this.desiredBeta = this.beta;
-        this.desiredRadius = this.radius;
-    }
+        let dragging = false;
+        let panning = false;
+        let lastX = 0;
+        let lastY = 0;
 
-    lerp(a: number, b: number, t: number) {
-        return (1 - t) * a + t * b;
-    }
+        const computeZoomNorm = () => {
+            return 0.1 + (0.9 * (desiredRadius - this.minZoom)) / (this.maxZoom - this.minZoom);
+        };
 
-    pan(dx: number, dy: number) {
-        const R = this.camera.rotation.buffer;
-        const right = new Vector3(R[0], R[3], R[6]);
-        const up = new Vector3(R[1], R[4], R[7]);
-        this.desiredTarget.add(right.multiply(dx));
-        this.desiredTarget.add(up.multiply(dy));
-    }
+        const onPointerDown = (e: PointerEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-    update() {
-        this.alpha = this.lerp(this.alpha, this.desiredAlpha, this.dampening);
-        this.beta = this.lerp(this.beta, this.desiredBeta, this.dampening);
-        this.radius = this.lerp(this.radius, this.desiredRadius, this.dampening);
-        this.target = this.target.lerp(this.desiredTarget, this.dampening);
+            dragging = true;
+            if (e.pointerType === "touch") {
+                panning = e.pointerId === 2;
+            } else {
+                panning = e.button === 2;
+            }
+            lastX = e.clientX;
+            lastY = e.clientY;
+            window.addEventListener("pointerup", onPointerUp);
+            window.addEventListener("pointercancel", onPointerUp);
+        };
 
-        const x = this.target.x + this.radius * Math.sin(this.alpha) * Math.cos(this.beta);
-        const y = this.target.y - this.radius * Math.sin(this.beta);
-        const z = this.target.z - this.radius * Math.cos(this.alpha) * Math.cos(this.beta);
-        this.camera.position.set(x, y, z);
+        const onPointerUp = (e: PointerEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-        const direction = this.target.clone().subtract(this.camera.position).normalize();
-        const rx = Math.asin(-direction.y);
-        const ry = Math.atan2(direction.x, direction.z);
-        this.camera.rotation = Matrix3.RotationFromEuler(new Vector3(rx, ry, 0));
+            dragging = false;
+            panning = false;
+            window.removeEventListener("pointerup", onPointerUp);
+            window.removeEventListener("pointercancel", onPointerUp);
+        };
+
+        const onPointerMove = (e: PointerEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!dragging) return;
+
+            const dx = e.clientX - lastX;
+            const dy = e.clientY - lastY;
+            const zoomNorm = computeZoomNorm();
+
+            if (panning) {
+                const panX = -dx * this.panSpeed * 0.01 * zoomNorm;
+                const panY = -dy * this.panSpeed * 0.01 * zoomNorm;
+                const R = camera.rotation.buffer;
+                const right = new Vector3(R[0], R[3], R[6]);
+                const up = new Vector3(R[1], R[4], R[7]);
+                desiredTarget.add(right.multiply(panX));
+                desiredTarget.add(up.multiply(panY));
+            } else {
+                desiredAlpha -= dx * this.orbitSpeed * 0.005;
+                desiredBeta += dy * this.orbitSpeed * 0.005;
+                desiredBeta = Math.min(Math.max(desiredBeta, this.minBeta), this.maxBeta);
+            }
+
+            lastX = e.clientX;
+            lastY = e.clientY;
+        };
+
+        const onWheel = (e: WheelEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const zoomNorm = computeZoomNorm();
+            desiredRadius += e.deltaY * this.zoomSpeed * 0.02 * zoomNorm;
+            desiredRadius = Math.min(Math.max(desiredRadius, this.minZoom), this.maxZoom);
+        };
+
+        const lerp = (a: number, b: number, t: number) => {
+            return (1 - t) * a + t * b;
+        };
+
+        this.update = () => {
+            alpha = lerp(alpha, desiredAlpha, this.dampening);
+            beta = lerp(beta, desiredBeta, this.dampening);
+            radius = lerp(radius, desiredRadius, this.dampening);
+            target = target.lerp(desiredTarget, this.dampening);
+
+            const x = target.x + radius * Math.sin(alpha) * Math.cos(beta);
+            const y = target.y - radius * Math.sin(beta);
+            const z = target.z - radius * Math.cos(alpha) * Math.cos(beta);
+            camera.position.set(x, y, z);
+
+            const direction = target.clone().subtract(camera.position).normalize();
+            const rx = Math.asin(-direction.y);
+            const ry = Math.atan2(direction.x, direction.z);
+            camera.rotation = Matrix3.RotationFromEuler(new Vector3(rx, ry, 0));
+        };
+
+        this.dispose = () => {
+            domElement.removeEventListener("pointerdown", onPointerDown);
+            domElement.removeEventListener("pointermove", onPointerMove);
+            domElement.removeEventListener("wheel", onWheel);
+        };
+
+        domElement.addEventListener("pointerdown", onPointerDown);
+        domElement.addEventListener("pointermove", onPointerMove);
+        domElement.addEventListener("wheel", onWheel);
+
+        this.update();
     }
 }
 

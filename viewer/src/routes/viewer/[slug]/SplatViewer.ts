@@ -213,23 +213,9 @@ export class SplatViewer implements IViewer {
         document.addEventListener("dragleave", this.preventDefault);
         document.addEventListener("contextmenu", this.preventDefault);
 
-        this.handleTouchStart = this.handleTouchStart.bind(this);
-        this.handleTouchEnd = this.handleTouchEnd.bind(this);
-        this.handleTouchMove = this.handleTouchMove.bind(this);
-        this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleMouseUp = this.handleMouseUp.bind(this);
-        this.handleMouseMove = this.handleMouseMove.bind(this);
-        this.handleMouseWheel = this.handleMouseWheel.bind(this);
         this.handleDrop = this.handleDrop.bind(this);
         this.handleResize = this.handleResize.bind(this);
 
-        this.canvas.addEventListener("touchstart", this.handleTouchStart);
-        this.canvas.addEventListener("touchend", this.handleTouchEnd);
-        this.canvas.addEventListener("touchmove", this.handleTouchMove);
-        this.canvas.addEventListener("mousedown", this.handleMouseDown);
-        this.canvas.addEventListener("mouseup", this.handleMouseUp);
-        this.canvas.addEventListener("mousemove", this.handleMouseMove);
-        this.canvas.addEventListener("wheel", this.handleMouseWheel);
         this.canvas.addEventListener("drop", this.handleDrop);
 
         window.addEventListener("resize", this.handleResize);
@@ -295,98 +281,6 @@ export class SplatViewer implements IViewer {
         }
     }
 
-    handleTouchStart(e: TouchEvent) {
-        e.preventDefault();
-        this.dragging = true;
-        this.panning = e.touches.length === 2;
-        this.lastX = e.touches[0].clientX;
-        this.lastY = e.touches[0].clientY;
-    }
-
-    handleTouchEnd(e: TouchEvent) {
-        e.preventDefault();
-        this.dragging = false;
-        this.panning = false;
-    }
-
-    computeZoomNorm() {
-        return (
-            0.1 +
-            (0.9 * (this.orbitControls.desiredRadius - this.orbitControls.minZoom)) /
-                (this.orbitControls.maxZoom - this.orbitControls.minZoom)
-        );
-    }
-
-    handleTouchMove(e: TouchEvent) {
-        e.preventDefault();
-        if (!this.dragging) return;
-        const dx = e.touches[0].clientX - this.lastX;
-        const dy = e.touches[0].clientY - this.lastY;
-        const zoomNorm = this.computeZoomNorm();
-
-        if (this.panning) {
-            this.orbitControls.pan(
-                -dx * this.orbitControls.panSpeed * 0.01 * zoomNorm,
-                -dy * this.orbitControls.panSpeed * 0.01 * zoomNorm
-            );
-        } else {
-            this.orbitControls.desiredAlpha -= dx * this.orbitControls.orbitSpeed * 0.005;
-            this.orbitControls.desiredBeta += dy * this.orbitControls.orbitSpeed * 0.005;
-            this.orbitControls.desiredBeta = Math.min(
-                Math.max(this.orbitControls.desiredBeta, this.orbitControls.minBeta),
-                this.orbitControls.maxBeta
-            );
-        }
-
-        this.lastX = e.touches[0].clientX;
-        this.lastY = e.touches[0].clientY;
-    }
-
-    handleMouseDown(e: MouseEvent) {
-        this.dragging = true;
-        this.panning = e.button === 2;
-        this.lastX = e.clientX;
-        this.lastY = e.clientY;
-    }
-
-    handleMouseUp(e: MouseEvent) {
-        this.dragging = false;
-        this.panning = false;
-    }
-
-    handleMouseMove(e: MouseEvent) {
-        if (!this.dragging) return;
-        const dx = e.clientX - this.lastX;
-        const dy = e.clientY - this.lastY;
-        const zoomNorm = this.computeZoomNorm();
-
-        if (this.panning) {
-            this.orbitControls.pan(
-                -dx * this.orbitControls.panSpeed * 0.01 * zoomNorm,
-                -dy * this.orbitControls.panSpeed * 0.01 * zoomNorm
-            );
-        } else {
-            this.orbitControls.desiredAlpha -= dx * this.orbitControls.orbitSpeed * 0.005;
-            this.orbitControls.desiredBeta += dy * this.orbitControls.orbitSpeed * 0.005;
-            this.orbitControls.desiredBeta = Math.min(
-                Math.max(this.orbitControls.desiredBeta, this.orbitControls.minBeta),
-                this.orbitControls.maxBeta
-            );
-        }
-
-        this.lastX = e.clientX;
-        this.lastY = e.clientY;
-    }
-
-    handleMouseWheel(e: WheelEvent) {
-        const zoomNorm = this.computeZoomNorm();
-        this.orbitControls.desiredRadius += e.deltaY * this.orbitControls.zoomSpeed * 0.02 * zoomNorm;
-        this.orbitControls.desiredRadius = Math.min(
-            Math.max(this.orbitControls.desiredRadius, this.orbitControls.minZoom),
-            this.orbitControls.maxZoom
-        );
-    }
-
     handleDrop(e: DragEvent) {
         e.preventDefault();
         e.stopPropagation();
@@ -426,6 +320,7 @@ export class SplatViewer implements IViewer {
 
     dispose() {
         this.worker.terminate();
+        this.orbitControls.dispose();
 
         this.gl.disableVertexAttribArray(this.a_position);
         this.gl.disableVertexAttribArray(this.a_center);
@@ -465,13 +360,6 @@ export class SplatViewer implements IViewer {
         document.removeEventListener("dragleave", this.preventDefault);
         document.removeEventListener("contextmenu", this.preventDefault);
 
-        this.canvas.removeEventListener("touchstart", this.handleTouchStart);
-        this.canvas.removeEventListener("touchend", this.handleTouchEnd);
-        this.canvas.removeEventListener("touchmove", this.handleTouchMove);
-        this.canvas.removeEventListener("mousedown", this.handleMouseDown);
-        this.canvas.removeEventListener("mouseup", this.handleMouseUp);
-        this.canvas.removeEventListener("mousemove", this.handleMouseMove);
-        this.canvas.removeEventListener("wheel", this.handleMouseWheel);
         this.canvas.removeEventListener("drop", this.handleDrop);
 
         window.removeEventListener("resize", this.handleResize);

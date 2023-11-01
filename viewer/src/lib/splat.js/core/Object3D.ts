@@ -1,5 +1,4 @@
 import { Vector3 } from "../math/Vector3";
-import { Quaternion } from "../math/Quaternion";
 import { Matrix3 } from "../math/Matrix3";
 
 class Object3D {
