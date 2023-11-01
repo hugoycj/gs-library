@@ -1,5 +1,4 @@
 import type { Camera } from "../cameras/Camera";
-import type { PerspectiveCamera } from "../cameras/PerspectiveCamera";
 import type { Scene } from "../core/Scene";
 import type { Renderer } from "./Renderer";
 
@@ -8,204 +7,212 @@ import { createWorker } from "./webgl/utils/worker";
 
 import { vertex } from "./webgl/shaders/vertex.glsl";
 import { frag } from "./webgl/shaders/frag.glsl";
-import type { Matrix4 } from "../math/Matrix4";
 
 export class WebGLRenderer implements Renderer {
     canvas: HTMLCanvasElement;
 
-    render: (scene: Scene, camera: Camera) => void;
-    dispose: () => void;
+    activeCamera: Camera | null = null;
+    activeScene: Scene | null = null;
+    vertexCount: number = 0;
+
+    gl: WebGLRenderingContext | null = null;
+    ext: ANGLE_instanced_arrays | null = null;
+    worker: Worker | null = null;
+
+    projectionMatrix: number[] = [];
+    vertexShader: WebGLShader | null = null;
+    fragmentShader: WebGLShader | null = null;
+    program: WebGLProgram | null = null;
+    a_position: number = 0;
+    a_center: number = 0;
+    a_color: number = 0;
+    a_covA: number = 0;
+    a_covB: number = 0;
+    vertexBuffer: WebGLBuffer | null = null;
+    centerBuffer: WebGLBuffer | null = null;
+    colorBuffer: WebGLBuffer | null = null;
+    covABuffer: WebGLBuffer | null = null;
+    covBBuffer: WebGLBuffer | null = null;
 
     constructor(canvas?: HTMLCanvasElement) {
         this.canvas =
             canvas ?? (document.createElementNS("http://www.w3.org/1999/xhtml", "canvas") as HTMLCanvasElement);
+    }
 
-        const gl = (this.canvas.getContext("webgl") ||
+    initWebGL() {
+        this.gl = (this.canvas.getContext("webgl") ||
             this.canvas.getContext("experimental-webgl")) as WebGLRenderingContext;
+        this.ext = this.gl.getExtension("ANGLE_instanced_arrays") as ANGLE_instanced_arrays;
 
-        let ext: ANGLE_instanced_arrays;
-        let worker: Worker;
-        let vertexShader: WebGLShader;
-        let fragmentShader: WebGLShader;
-        let program: WebGLProgram;
+        this.worker = new Worker(
+            URL.createObjectURL(
+                new Blob(["(", createWorker.toString(), ")(self)"], {
+                    type: "application/javascript",
+                })
+            )
+        );
 
-        let u_projection: WebGLUniformLocation;
-        let u_viewport: WebGLUniformLocation;
-        let u_focal: WebGLUniformLocation;
-        let u_view: WebGLUniformLocation;
+        this.canvas.width = innerWidth;
+        this.canvas.height = innerHeight;
+        this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 
-        let vertexLocation: number;
-        let centerLocation: number;
-        let colorLocation: number;
-        let covALocation: number;
-        let covBLocation: number;
+        this.activeCamera!.updateProjectionMatrix(this.canvas.width, this.canvas.height);
 
-        let vertexBuffer: WebGLBuffer;
-        let centerBuffer: WebGLBuffer;
-        let colorBuffer: WebGLBuffer;
-        let covABuffer: WebGLBuffer;
-        let covBBuffer: WebGLBuffer;
+        let viewMatrix = getViewMatrix(this.activeCamera!);
 
-        function initGLContext(width: number, height: number, scene: Scene, camera: PerspectiveCamera) {
-            ext = gl.getExtension("ANGLE_instanced_arrays") as ANGLE_instanced_arrays;
-
-            worker = new Worker(
-                URL.createObjectURL(
-                    new Blob(["(", createWorker.toString(), ")(self)"], {
-                        type: "application/javascript",
-                    })
-                )
-            );
-
-            // Viewport
-            gl.viewport(0, 0, width, height);
-            camera.updateProjectionMatrix(width, height);
-
-            // Vertex shader
-            vertexShader = gl.createShader(gl.VERTEX_SHADER) as WebGLShader;
-            gl.shaderSource(vertexShader, vertex);
-            gl.compileShader(vertexShader);
-            if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
-                console.error(gl.getShaderInfoLog(vertexShader));
-            }
-
-            // Fragment shader
-            fragmentShader = gl.createShader(gl.FRAGMENT_SHADER) as WebGLShader;
-            gl.shaderSource(fragmentShader, frag);
-            gl.compileShader(fragmentShader);
-            if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
-                console.error(gl.getShaderInfoLog(fragmentShader));
-            }
-
-            // Program
-            program = gl.createProgram() as WebGLProgram;
-            gl.attachShader(program, vertexShader);
-            gl.attachShader(program, fragmentShader);
-            gl.linkProgram(program);
-            gl.useProgram(program);
-            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-                console.error(gl.getProgramInfoLog(program));
-            }
-
-            // Blending
-            gl.disable(gl.DEPTH_TEST);
-            gl.enable(gl.BLEND);
-            gl.blendFuncSeparate(gl.ONE_MINUS_DST_ALPHA, gl.ONE, gl.ONE_MINUS_DST_ALPHA, gl.ONE);
-            gl.blendEquationSeparate(gl.FUNC_ADD, gl.FUNC_ADD);
-
-            // Uniforms
-            u_projection = gl.getUniformLocation(program, "projection") as WebGLUniformLocation;
-            gl.uniformMatrix4fv(u_projection, false, camera.projectionMatrix.buffer);
-
-            u_viewport = gl.getUniformLocation(program, "viewport") as WebGLUniformLocation;
-            gl.uniform2fv(u_viewport, new Float32Array([width, height]));
-
-            u_focal = gl.getUniformLocation(program, "focal") as WebGLUniformLocation;
-            gl.uniform2fv(u_focal, new Float32Array([camera.fx, camera.fy]));
-
-            const viewMatrix = getViewMatrix(camera);
-            u_view = gl.getUniformLocation(program, "view") as WebGLUniformLocation;
-            gl.uniformMatrix4fv(u_view, false, viewMatrix.buffer);
-
-            // Vertex buffer
-            const triangleVertices = new Float32Array([-2, -2, 2, -2, 2, 2, -2, 2]);
-            vertexBuffer = gl.createBuffer() as WebGLBuffer;
-
-            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, triangleVertices, gl.STATIC_DRAW);
-
-            vertexLocation = gl.getAttribLocation(program, "position");
-            gl.enableVertexAttribArray(vertexLocation);
-            gl.vertexAttribPointer(vertexLocation, 2, gl.FLOAT, false, 0, 0);
-
-            // Center buffer
-            centerBuffer = gl.createBuffer() as WebGLBuffer;
-            centerLocation = gl.getAttribLocation(program, "center");
-
-            gl.enableVertexAttribArray(centerLocation);
-            gl.bindBuffer(gl.ARRAY_BUFFER, centerBuffer);
-            gl.vertexAttribPointer(centerLocation, 3, gl.FLOAT, false, 0, 0);
-            ext.vertexAttribDivisorANGLE(centerLocation, 1);
-
-            // Color buffer
-            colorBuffer = gl.createBuffer() as WebGLBuffer;
-            colorLocation = gl.getAttribLocation(program, "color");
-
-            gl.enableVertexAttribArray(colorLocation);
-            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-            gl.vertexAttribPointer(colorLocation, 4, gl.FLOAT, false, 0, 0);
-            ext.vertexAttribDivisorANGLE(colorLocation, 1);
-
-            // Covariance A buffer
-            covABuffer = gl.createBuffer() as WebGLBuffer;
-            covALocation = gl.getAttribLocation(program, "covA");
-
-            gl.enableVertexAttribArray(covALocation);
-            gl.bindBuffer(gl.ARRAY_BUFFER, covABuffer);
-            gl.vertexAttribPointer(covALocation, 3, gl.FLOAT, false, 0, 0);
-            ext.vertexAttribDivisorANGLE(covALocation, 1);
-
-            // Covariance B buffer
-            covBBuffer = gl.createBuffer() as WebGLBuffer;
-            covBLocation = gl.getAttribLocation(program, "covB");
-
-            gl.enableVertexAttribArray(covBLocation);
-            gl.bindBuffer(gl.ARRAY_BUFFER, covBBuffer);
-            gl.vertexAttribPointer(covBLocation, 3, gl.FLOAT, false, 0, 0);
-            ext.vertexAttribDivisorANGLE(covBLocation, 1);
-
-            worker.onmessage = (e) => {
-                if (e.data.center) {
-                    let { covA, covB, center, color } = e.data;
-
-                    gl.bindBuffer(gl.ARRAY_BUFFER, centerBuffer);
-                    gl.bufferData(gl.ARRAY_BUFFER, center, gl.DYNAMIC_DRAW);
-
-                    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-                    gl.bufferData(gl.ARRAY_BUFFER, color, gl.DYNAMIC_DRAW);
-
-                    gl.bindBuffer(gl.ARRAY_BUFFER, covABuffer);
-                    gl.bufferData(gl.ARRAY_BUFFER, covA, gl.DYNAMIC_DRAW);
-
-                    gl.bindBuffer(gl.ARRAY_BUFFER, covBBuffer);
-                    gl.bufferData(gl.ARRAY_BUFFER, covB, gl.DYNAMIC_DRAW);
-                }
-            };
+        this.vertexShader = this.gl.createShader(this.gl.VERTEX_SHADER) as WebGLShader;
+        this.gl.shaderSource(this.vertexShader, vertex);
+        this.gl.compileShader(this.vertexShader);
+        if (!this.gl.getShaderParameter(this.vertexShader, this.gl.COMPILE_STATUS)) {
+            console.error(this.gl.getShaderInfoLog(this.vertexShader));
         }
 
-        let currentScene: Scene | null = null;
-        let currentCamera: Camera | null = null;
+        this.fragmentShader = this.gl.createShader(this.gl.FRAGMENT_SHADER) as WebGLShader;
+        this.gl.shaderSource(this.fragmentShader, frag);
+        this.gl.compileShader(this.fragmentShader);
+        if (!this.gl.getShaderParameter(this.fragmentShader, this.gl.COMPILE_STATUS)) {
+            console.error(this.gl.getShaderInfoLog(this.fragmentShader));
+        }
 
-        this.render = function (scene: Scene, camera: Camera) {
-            if (scene !== currentScene || camera !== currentCamera) {
-                const perspectiveCamera = camera as PerspectiveCamera;
-                if (perspectiveCamera == null) {
-                    throw new Error("Camera is not a PerspectiveCamera");
-                }
+        this.program = this.gl.createProgram() as WebGLProgram;
+        this.gl.attachShader(this.program, this.vertexShader);
+        this.gl.attachShader(this.program, this.fragmentShader);
+        this.gl.linkProgram(this.program);
+        this.gl.useProgram(this.program);
 
-                if (currentScene != null || currentCamera != null) {
-                    this.dispose();
-                }
+        if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS)) {
+            console.error(this.gl.getProgramInfoLog(this.program));
+        }
 
-                currentScene = scene;
-                currentCamera = camera;
+        this.gl.disable(this.gl.DEPTH_TEST); // Disable depth testing
 
-                initGLContext(this.canvas.width, this.canvas.height, scene, perspectiveCamera);
+        // Enable blending
+        this.gl.enable(this.gl.BLEND);
+
+        // Set blending function
+        this.gl.blendFuncSeparate(this.gl.ONE_MINUS_DST_ALPHA, this.gl.ONE, this.gl.ONE_MINUS_DST_ALPHA, this.gl.ONE);
+
+        // Set blending equation
+        this.gl.blendEquationSeparate(this.gl.FUNC_ADD, this.gl.FUNC_ADD);
+
+        // projection
+        const u_projection = this.gl.getUniformLocation(this.program, "projection");
+        this.gl.uniformMatrix4fv(u_projection, false, this.projectionMatrix);
+
+        // viewport
+        const u_viewport = this.gl.getUniformLocation(this.program, "viewport");
+        this.gl.uniform2fv(u_viewport, new Float32Array([this.canvas.width, this.canvas.height]));
+
+        // focal
+        const u_focal = this.gl.getUniformLocation(this.program, "focal");
+        this.gl.uniform2fv(u_focal, new Float32Array([this.activeCamera!.fx, this.activeCamera!.fy]));
+
+        // view
+        const u_view = this.gl.getUniformLocation(this.program, "view");
+        this.gl.uniformMatrix4fv(u_view, false, viewMatrix.buffer);
+
+        // positions
+        const triangleVertices = new Float32Array([-2, -2, 2, -2, 2, 2, -2, 2]);
+        this.vertexBuffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexBuffer);
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, triangleVertices, this.gl.STATIC_DRAW);
+
+        this.a_position = this.gl.getAttribLocation(this.program, "position");
+        this.gl.enableVertexAttribArray(this.a_position);
+        this.gl.vertexAttribPointer(this.a_position, 2, this.gl.FLOAT, false, 0, 0);
+
+        // center
+        this.centerBuffer = this.gl.createBuffer();
+        this.a_center = this.gl.getAttribLocation(this.program, "center");
+        this.gl.enableVertexAttribArray(this.a_center);
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.centerBuffer);
+        this.gl.vertexAttribPointer(this.a_center, 3, this.gl.FLOAT, false, 0, 0);
+        this.ext.vertexAttribDivisorANGLE(this.a_center, 1); // Use the extension here
+
+        // color
+        this.colorBuffer = this.gl.createBuffer();
+        this.a_color = this.gl.getAttribLocation(this.program, "color");
+        this.gl.enableVertexAttribArray(this.a_color);
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorBuffer);
+        this.gl.vertexAttribPointer(this.a_color, 4, this.gl.FLOAT, false, 0, 0);
+        this.ext.vertexAttribDivisorANGLE(this.a_color, 1); // Use the extension here
+
+        // cov
+        this.covABuffer = this.gl.createBuffer();
+        this.a_covA = this.gl.getAttribLocation(this.program, "covA");
+        this.gl.enableVertexAttribArray(this.a_covA);
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.covABuffer);
+        this.gl.vertexAttribPointer(this.a_covA, 3, this.gl.FLOAT, false, 0, 0);
+        this.ext.vertexAttribDivisorANGLE(this.a_covA, 1); // Use the extension here
+
+        this.covBBuffer = this.gl.createBuffer();
+        this.a_covB = this.gl.getAttribLocation(this.program, "covB");
+        this.gl.enableVertexAttribArray(this.a_covB);
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.covBBuffer);
+        this.gl.vertexAttribPointer(this.a_covB, 3, this.gl.FLOAT, false, 0, 0);
+        this.ext.vertexAttribDivisorANGLE(this.a_covB, 1); // Use the extension here
+
+        this.worker.onmessage = (e) => {
+            if (e.data.buffer) {
+                this.activeScene!.setData(new Uint8Array(e.data.buffer));
+                const blob = new Blob([this.activeScene!.data.buffer], {
+                    type: "application/octet-stream",
+                });
+                const link = document.createElement("a");
+                link.download = "model.splat";
+                link.href = URL.createObjectURL(blob);
+                document.body.appendChild(link);
+                link.click();
+            } else {
+                let { covA, covB, center, color } = e.data;
+                this.vertexCount = center.length / 3;
+
+                const gl = this.gl!;
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.centerBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, center, gl.DYNAMIC_DRAW);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, color, gl.DYNAMIC_DRAW);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.covABuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, covA, gl.DYNAMIC_DRAW);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.covBBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, covB, gl.DYNAMIC_DRAW);
             }
         };
 
-        this.dispose = function () {
-            gl.deleteBuffer(vertexBuffer);
-            gl.deleteBuffer(centerBuffer);
-            gl.deleteBuffer(colorBuffer);
-            gl.deleteBuffer(covABuffer);
-            gl.deleteBuffer(covBBuffer);
+        this.frame = () => {
+            this.activeCamera!.updateProjectionMatrix(this.canvas.width, this.canvas.height);
 
-            gl.deleteShader(vertexShader);
-            gl.deleteShader(fragmentShader);
-            gl.deleteProgram(program);
+            const viewProj = this.activeCamera!.projectionMatrix.multiply(viewMatrix);
+            this.worker!.postMessage({ view: viewProj.buffer });
 
-            worker.terminate();
+            if (this.vertexCount > 0) {
+                this.gl!.uniformMatrix4fv(u_view, false, viewMatrix.buffer);
+                this.ext!.drawArraysInstancedANGLE(this.gl!.TRIANGLE_FAN, 0, 4, this.vertexCount);
+            } else {
+                this.gl!.clear(this.gl!.COLOR_BUFFER_BIT);
+            }
         };
     }
+
+    frame: () => void = () => {};
+
+    render(scene: Scene, camera: Camera) {
+        if (this.activeScene !== scene || this.activeCamera !== camera) {
+            if (this.activeScene !== null && this.activeCamera !== null) {
+                this.dispose();
+            }
+
+            this.activeScene = scene;
+            this.activeCamera = camera;
+            this.initWebGL();
+        }
+
+        this.frame();
+    }
+
+    dispose() {}
 }

@@ -11,10 +11,13 @@ class Scene extends Object3D {
         this.vertexCount = 0;
     }
 
-    setData(data: Uint8Array, vertexCount: number): void {
+    setData(data: Uint8Array): void {
         this.data = data;
-        this.vertexCount = vertexCount;
-        console.log("setData", vertexCount);
+
+        const rowLength = 3 * 4 + 3 * 4 + 4 + 4;
+        this.vertexCount = data.length / rowLength;
+
+        console.log("setData", this.vertexCount);
     }
 }
 
