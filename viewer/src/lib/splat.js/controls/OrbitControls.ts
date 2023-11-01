@@ -25,7 +25,7 @@ class OrbitControls extends EventDispatcher {
     orbitSpeed: number = 1;
     panSpeed: number = 1;
     zoomSpeed: number = 1;
-    dampening: number = 10;
+    dampening: number = 0.3;
 
     constructor(camera: Camera, domElement: HTMLElement) {
         super();
@@ -51,11 +51,11 @@ class OrbitControls extends EventDispatcher {
         this.desiredTarget.add(up.multiply(dy));
     }
 
-    update(deltaTime: number) {
-        this.alpha = this.lerp(this.alpha, this.desiredAlpha, this.dampening * deltaTime);
-        this.beta = this.lerp(this.beta, this.desiredBeta, this.dampening * deltaTime);
-        this.radius = this.lerp(this.radius, this.desiredRadius, this.dampening * deltaTime);
-        this.target = this.target.lerp(this.desiredTarget, this.dampening * deltaTime);
+    update() {
+        this.alpha = this.lerp(this.alpha, this.desiredAlpha, this.dampening);
+        this.beta = this.lerp(this.beta, this.desiredBeta, this.dampening);
+        this.radius = this.lerp(this.radius, this.desiredRadius, this.dampening);
+        this.target = this.target.lerp(this.desiredTarget, this.dampening);
 
         const x = this.target.x + this.radius * Math.sin(this.alpha) * Math.cos(this.beta);
         const y = this.target.y - this.radius * Math.sin(this.beta);

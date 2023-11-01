@@ -184,15 +184,9 @@ export class SplatViewer implements IViewer {
         };
 
         let vertexCount = 0;
-        let lastTime = performance.now();
 
         const frame = () => {
-            const currentTime = performance.now();
-            const deltaTime = (currentTime - lastTime) / 1000;
-            lastTime = currentTime;
-            console.log(deltaTime);
-
-            this.orbitControls.update(deltaTime);
+            this.orbitControls.update();
 
             this.camera.updateProjectionMatrix(this.canvas.width, this.canvas.height);
             viewMatrix = SPLAT.getViewMatrix(this.camera);
