@@ -36,8 +36,7 @@ class OrbitControls {
         };
 
         const onPointerDown = (e: PointerEvent) => {
-            e.preventDefault();
-            e.stopPropagation();
+            preventDefault(e);
 
             dragging = true;
             if (e.pointerType === "touch") {
@@ -52,8 +51,7 @@ class OrbitControls {
         };
 
         const onPointerUp = (e: PointerEvent) => {
-            e.preventDefault();
-            e.stopPropagation();
+            preventDefault(e);
 
             dragging = false;
             panning = false;
@@ -62,8 +60,7 @@ class OrbitControls {
         };
 
         const onPointerMove = (e: PointerEvent) => {
-            e.preventDefault();
-            e.stopPropagation();
+            preventDefault(e);
 
             if (!dragging) return;
 
@@ -90,8 +87,7 @@ class OrbitControls {
         };
 
         const onWheel = (e: WheelEvent) => {
-            e.preventDefault();
-            e.stopPropagation();
+            preventDefault(e);
 
             const zoomNorm = computeZoomNorm();
             desiredRadius += e.deltaY * this.zoomSpeed * 0.02 * zoomNorm;
@@ -119,11 +115,26 @@ class OrbitControls {
             camera.rotation = Matrix3.RotationFromEuler(new Vector3(rx, ry, 0));
         };
 
+        const preventDefault = (e: Event) => {
+            e.preventDefault();
+            e.stopPropagation();
+        };
+
         this.dispose = () => {
+            domElement.removeEventListener("dragenter", preventDefault);
+            domElement.removeEventListener("dragover", preventDefault);
+            domElement.removeEventListener("dragleave", preventDefault);
+            domElement.removeEventListener("contextmenu", preventDefault);
+
             domElement.removeEventListener("pointerdown", onPointerDown);
             domElement.removeEventListener("pointermove", onPointerMove);
             domElement.removeEventListener("wheel", onWheel);
         };
+
+        domElement.addEventListener("dragenter", preventDefault);
+        domElement.addEventListener("dragover", preventDefault);
+        domElement.addEventListener("dragleave", preventDefault);
+        domElement.addEventListener("contextmenu", preventDefault);
 
         domElement.addEventListener("pointerdown", onPointerDown);
         domElement.addEventListener("pointermove", onPointerMove);

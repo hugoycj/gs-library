@@ -8,8 +8,3 @@ export { Quaternion } from "./math/Quaternion";
 export { Vector3 } from "./math/Vector3";
 export { Matrix4 } from "./math/Matrix4";
 export { Matrix3 } from "./math/Matrix3";
-
-export { createWorker } from "./renderers/webgl/utils/worker";
-export { getViewMatrix } from "./renderers/webgl/utils/transformations";
-export { vertex } from "./renderers/webgl/shaders/vertex.glsl";
-export { frag } from "./renderers/webgl/shaders/frag.glsl";

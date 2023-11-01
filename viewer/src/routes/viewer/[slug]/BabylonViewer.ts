@@ -4,10 +4,12 @@ import "@babylonjs/loaders/glTF";
 import "@babylonjs/loaders/OBJ";
 
 export class BabylonViewer implements IViewer {
+    canvas: HTMLCanvasElement;
+
     engine: BABYLON.Engine;
     scene: BABYLON.Scene;
     camera: BABYLON.ArcRotateCamera;
-    canvas: HTMLCanvasElement;
+
     triangleCount: number = 0;
 
     constructor(canvas: HTMLCanvasElement) {

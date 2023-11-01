@@ -16,8 +16,6 @@ class Scene extends Object3D {
 
         const rowLength = 3 * 4 + 3 * 4 + 4 + 4;
         this.vertexCount = data.length / rowLength;
-
-        console.log("setData", this.vertexCount);
     }
 }
 
