@@ -18,6 +18,8 @@ export class SplatViewer implements IViewer {
         this.scene = new SPLAT.Scene();
         this.camera = new SPLAT.Camera();
         this.controls = new SPLAT.OrbitControls(this.camera, canvas);
+
+        this.handleResize = this.handleResize.bind(this);
     }
 
     async loadScene(url: string, loadingBarCallback?: (progress: number) => void) {
@@ -36,10 +38,19 @@ export class SplatViewer implements IViewer {
 
         this.disposed = false;
 
+        this.handleResize();
+        window.addEventListener("resize", this.handleResize);
+
         requestAnimationFrame(frame);
     }
 
+    handleResize() {
+        this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+    }
+
     dispose() {
+        window.removeEventListener("resize", this.handleResize);
+
         this.controls.dispose();
         this.renderer.dispose();
 
@@ -47,7 +58,33 @@ export class SplatViewer implements IViewer {
     }
 
     async capture(): Promise<string | null> {
-        return null;
+        return new Promise((resolve) => {
+            requestAnimationFrame(() => {
+                const offscreenCanvas = document.createElement("canvas");
+                offscreenCanvas.width = 512;
+                offscreenCanvas.height = 512;
+                const offscreenContext = offscreenCanvas.getContext("2d") as CanvasRenderingContext2D;
+
+                const x = (this.canvas.width - offscreenCanvas.width) / 2;
+                const y = (this.canvas.height - offscreenCanvas.height) / 2;
+
+                offscreenContext.drawImage(
+                    this.canvas,
+                    x,
+                    y,
+                    offscreenCanvas.width,
+                    offscreenCanvas.height,
+                    0,
+                    0,
+                    offscreenCanvas.width,
+                    offscreenCanvas.height
+                );
+                const dataUrl = offscreenCanvas.toDataURL("image/png");
+                offscreenCanvas.remove();
+
+                resolve(dataUrl);
+            });
+        });
     }
 
     getStats(): { name: string; value: any }[] {

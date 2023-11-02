@@ -30,16 +30,6 @@
         ]
     },
     {
-        "slug": "3dgs-flowers",
-        "model": "3dgs",
-        "title": "Flowers",
-        "type": "splat",
-        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/flowers/flowers-7k.splat",
-        "pipeline": [
-            "Gaussian Splatting"
-        ]
-    },
-    {
         "slug": "3dgs-garden",
         "model": "3dgs",
         "title": "Garden",
@@ -85,16 +75,6 @@
         "title": "Stump",
         "type": "splat",
         "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/stump/stump-7k.splat",
-        "pipeline": [
-            "Gaussian Splatting"
-        ]
-    },
-    {
-        "slug": "3dgs-treehill",
-        "model": "3dgs",
-        "title": "Treehill",
-        "type": "splat",
-        "url": "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/treehill/treehill-7k.splat",
         "pipeline": [
             "Gaussian Splatting"
         ]

@@ -16,6 +16,15 @@
         "spaces": []
     },
     {
+        "slug": "shap-e",
+        "title": "shap-e",
+        "paper": "https://arxiv.org/abs/2305.02463",
+        "code": "https://github.com/openai/shap-e",
+        "spaces": [
+            "https://huggingface.co/spaces/hysts/Shap-E"
+        ]
+    },
+    {
         "slug": "dreamfusion",
         "title": "DreamFusion",
         "paper": "https://arxiv.org/abs/2209.14988",
@@ -28,6 +37,70 @@
         "paper": "https://huggingface.co/papers/2308.16512",
         "project": "https://mv-dream.github.io/",
         "code": "https://github.com/bytedance/MVDream",
+        "spaces": []
+    },
+    {
+        "slug": "wonder3d",
+        "title": "Wonder3D",
+        "paper": "https://huggingface.co/papers/2310.15008",
+        "project": "https://www.xxlong.site/Wonder3D/",
+        "code": "https://github.com/xxlong0/Wonder3D",
+        "spaces": []
+    },
+    {
+        "slug": "gaussian-dreamer",
+        "title": "GaussianDreamer",
+        "paper": "https://huggingface.co/papers/2310.08529",
+        "project": "https://taoranyi.com/gaussiandreamer/",
+        "code": "https://github.com/hustvl/GaussianDreamer",
+        "spaces": []
+    },
+    {
+        "slug": "dream-gaussian",
+        "title": "DreamGaussian",
+        "paper": "https://huggingface.co/papers/2309.16653",
+        "project": "https://dreamgaussian.github.io/",
+        "code": "https://github.com/dreamgaussian/dreamgaussian",
+        "spaces": [
+            "https://huggingface.co/spaces/jiawei011/dreamgaussian"
+        ]
+    },
+    {
+        "slug": "panic3d-anime-reconstruction",
+        "title": "PAniC-3D",
+        "paper": "https://arxiv.org/abs/2303.14587",
+        "project": "",
+        "code": "https://github.com/ShuhongChen/panic3d-anime-reconstruction",
+        "spaces": []
+    },
+    {
+        "slug": "eg3d",
+        "title": "EG3D",
+        "paper": "https://arxiv.org/abs/2112.07945",
+        "project": "https://nvlabs.github.io/eg3d/",
+        "code": "https://github.com/NVlabs/eg3d",
+        "spaces": []
+    },
+    {
+        "slug": "ag3d",
+        "title": "AG3D",
+        "paper": "https://zj-dong.github.io/AG3D/assets/paper.pdf",
+        "project": "https://zj-dong.github.io/AG3D/",
+        "code": "https://github.com/zj-dong/AG3D",
+        "spaces": []
+    },
+    {
+        "slug": "scene-dreamer",
+        "title": "SceneDreamer",
+        "paper": "https://arxiv.org/abs/2302.01330",
+        "project": "https://scene-dreamer.github.io/",
+        "code": "https://github.com/FrozenBurning/SceneDreamer",
+        "spaces": ["https://huggingface.co/spaces/FrozenBurning/SceneDreamer"]
+    },
+    {
+        "slug": "ldm3d-vr",
+        "title": "LDM3D-VR",
+        "paper": "https://arxiv.org/abs/2311.03226",
         "spaces": []
     }
 ]

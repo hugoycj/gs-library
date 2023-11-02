@@ -1,11 +1,11 @@
-FROM oven/bun
+FROM node:alpine
 
 WORKDIR /app
 COPY viewer/package.json package.json
-RUN bun install
+RUN npm install
 
 COPY viewer/ /app
-RUN bun run build
+RUN npm run build
 
 EXPOSE 3000
-CMD ["bun", "./build"]
+CMD ["npm", "start"]
