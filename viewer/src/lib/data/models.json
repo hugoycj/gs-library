@@ -102,5 +102,36 @@
         "title": "LDM3D-VR",
         "paper": "https://arxiv.org/abs/2311.03226",
         "spaces": []
+    },
+    {
+        "slug": "d3ga",
+        "title": "D3GA",
+        "paper": "https://huggingface.co/papers/2311.08581",
+        "project": "https://zielon.github.io/d3ga/",
+        "spaces": []
+    },
+    {
+        "slug": "dmv3d",
+        "title": "DMV3D",
+        "paper": "https://huggingface.co/papers/2311.09217",
+        "project": "https://justimyhxu.github.io/projects/dmv3d/",
+        "spaces": []
+    },
+    {
+        "slug": "instant3d",
+        "title": "Instant3D",
+        "paper": "https://huggingface.co/papers/2311.08403",
+        "project": "https://instant-3d.github.io/",
+        "spaces": []
+    },
+    {
+        "slug": "one2345++",
+        "title": "One-2-3-45++",
+        "paper": "https://huggingface.co/papers/2311.07885",
+        "project": "https://one-2-3-45.github.io/",
+        "code": "https://github.com/One-2-3-45/One-2-3-45",
+        "spaces": [
+            "https://huggingface.co/spaces/One-2-3-45/One-2-3-45"
+        ]
     }
 ]
