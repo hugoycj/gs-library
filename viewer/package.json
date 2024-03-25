@@ -24,6 +24,6 @@
     "dependencies": {
         "@babylonjs/core": "^6.23.0",
         "@babylonjs/loaders": "^6.23.0",
-        "gsplat": "^1.0.5"
+        "gsplat": "^1.2.3"
     }
 }
