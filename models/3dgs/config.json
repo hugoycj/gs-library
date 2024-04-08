@@ -1,0 +1,7 @@
+{
+        "title": "3D Gaussian Splatting",
+        "paper": "https://huggingface.co/papers/2308.04079",
+        "project": "https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/",
+        "code": "https://github.com/graphdeco-inria/gaussian-splatting",
+        "spaces": []
+}
