@@ -27,7 +27,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-        python .github/update_models.py
+        python .github/workflows/update_models.py
     
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v4
