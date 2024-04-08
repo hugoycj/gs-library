@@ -1,0 +1,6 @@
+{
+    "title": "Deformable 3D Gaussians for High-Fidelity Monocular Dynamic Scene Reconstruction",
+    "paper": "https://arxiv.org/abs/2309.13101",
+    "project": "https://ingra14m.github.io/Deformable-Gaussians/",
+    "code": "https://github.com/ingra14m/Deformable-3D-Gaussians"
+}

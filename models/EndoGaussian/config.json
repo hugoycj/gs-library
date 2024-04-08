@@ -1,0 +1,6 @@
+{
+    "title": "EndoGaussian: Gaussian Splatting for Deformable Surgical Scene Reconstruction",
+    "paper": "https://arxiv.org/abs/2401.12561",
+    "project": "https://yifliu3.github.io/EndoGaussian/",
+    "code": "https://github.com/yifliu3/EndoGaussian"
+}

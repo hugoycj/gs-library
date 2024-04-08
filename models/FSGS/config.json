@@ -1,0 +1,6 @@
+{
+    "title": "FSGS: Real-Time Few-shot View Synthesis using Gaussian Splatting",
+    "paper": "https://arxiv.org/abs/2312.00451",
+    "project": "https://zehaozhu.github.io/FSGS/",
+    "code": "https://github.com/VITA-Group/FSGS"
+}

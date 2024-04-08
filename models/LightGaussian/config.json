@@ -1,0 +1,6 @@
+{
+    "title": "LightGaussian: Unbounded 3D Gaussian Compression\n    with 15x Reduction and 200+ FPS",
+    "paper": "https://arxiv.org/abs/2311.17245",
+    "project": "https://lightgaussian.github.io/",
+    "code": "https://github.com/VITA-Group/LightGaussian"
+}

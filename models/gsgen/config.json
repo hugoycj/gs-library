@@ -1,0 +1,6 @@
+{
+    "title": "Text-to-3D using Gaussian Splatting",
+    "paper": "https://arxiv.org/abs/2309.16585",
+    "project": "https://gsgen3d.github.io/",
+    "code": "https://github.com/gsgen3d/gsgen"
+}

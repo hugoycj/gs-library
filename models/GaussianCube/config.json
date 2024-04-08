@@ -1,0 +1,6 @@
+{
+    "title": "GaussianCube: Structuring Gaussian Splatting using Optimal Transport for\n  3D Generative Modeling",
+    "paper": "https://huggingface.co/papers/2403.19655",
+    "project": "https://gaussiancube.github.io/",
+    "code": "https://github.com/GaussianCube/GaussianCube"
+}

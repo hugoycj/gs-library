@@ -1,0 +1,6 @@
+{
+    "title": "Gaussian-Flow: 4D Reconstruction with Dynamic 3D Gaussian Particle",
+    "paper": "https://arxiv.org/abs/2312.03431",
+    "project": "https://nju-3dv.github.io/projects/Gaussian-Flow",
+    "code": "https://github.com/NJU-3DV/Gaussian-Flow"
+}

@@ -1,0 +1,6 @@
+{
+    "title": "GPS-Gaussian: Generalizable Pixel-wise 3D Gaussian Splatting for Real-time Human Novel View Synthesis",
+    "paper": "https://huggingface.co/papers/2312.02155",
+    "project": "https://shunyuanzheng.github.io/GPS-Gaussian",
+    "code": "https://github.com/ShunyuanZheng/GPS-Gaussian"
+}

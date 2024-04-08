@@ -1,0 +1,6 @@
+{
+    "title": "SplaTAM: Splat, Track & Map 3D Gaussians for Dense RGB-D SLAM",
+    "paper": "https://arxiv.org/abs/2312.02126",
+    "project": "https://spla-tam.github.io/",
+    "code": "https://github.com/spla-tam/SplaTAM"
+}

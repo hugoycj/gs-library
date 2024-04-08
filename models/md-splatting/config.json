@@ -1,0 +1,6 @@
+{
+    "title": "MD-Splatting: Learning Metric Deformation from 4D Gaussians in Highly Deformable Scenes",
+    "paper": "https://arxiv.org/abs/2312.00583",
+    "project": "https://md-splatting.github.io/",
+    "code": "https://github.com/momentum-robotics-lab/md-splatting"
+}

@@ -1,0 +1,6 @@
+{
+    "title": "pixelSplat: 3D Gaussian Splats from Image Pairs for Scalable Generalizable 3D Reconstruction",
+    "paper": "https://arxiv.org/abs/2312.12337",
+    "project": "https://davidcharatan.com/pixelsplat/",
+    "code": "https://github.com/dcharatan/pixelsplat"
+}

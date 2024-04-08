@@ -1,0 +1,6 @@
+{
+    "title": "HumanGaussian: Text-Driven 3D Human Generation with Gaussian Splatting",
+    "paper": "https://arxiv.org/abs/2311.17061",
+    "project": "https://alvinliu0.github.io/projects/HumanGaussian",
+    "code": "https://github.com/alvinliu0/HumanGaussian"
+}

@@ -1,0 +1,6 @@
+{
+    "title": "StyleGaussian: Instant 3D Style Transfer with Gaussian Splatting",
+    "paper": "https://arxiv.org/abs/2403.07807",
+    "project": "https://kunhao-liu.github.io/StyleGaussian/",
+    "code": "https://github.com/Kunhao-Liu/StyleGaussian"
+}

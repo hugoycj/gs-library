@@ -1,0 +1,6 @@
+{
+    "title": "3DGS-Avatar: Animatable Avatars via Deformable 3D Gaussian Splatting",
+    "paper": "https://arxiv.org/abs/2312.09228",
+    "project": "https://neuralbodies.github.io/3DGS-Avatar/index.html",
+    "code": "https://github.com/mikeqzy/3dgs-avatar-release"
+}

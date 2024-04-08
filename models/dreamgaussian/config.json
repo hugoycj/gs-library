@@ -1,0 +1,6 @@
+{
+    "title": "DreamGaussian: Generative Gaussian Splatting for Efficient 3D Content Creation",
+    "paper": "https://arxiv.org/abs/2309.16653",
+    "project": "https://dreamgaussian.github.io/",
+    "code": "https://github.com/dreamgaussian/dreamgaussian"
+}

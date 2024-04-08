@@ -1,0 +1,6 @@
+{
+    "title": "4D Gaussian Splatting for Real-Time Dynamic Scene Rendering",
+    "paper": "https://arxiv.org/abs/2310.08528",
+    "project": "https://guanjunwu.github.io/4dgs/",
+    "code": "https://github.com/hustvl/4DGaussians"
+}

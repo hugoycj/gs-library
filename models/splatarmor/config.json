@@ -1,0 +1,6 @@
+{
+    "title": "SplatArmor: Articulated Gaussian splatting for animatable humans from monocular RGB videos",
+    "paper": "https://arxiv.org/abs/2311.10812",
+    "project": "https://jenaroh.it/splatarmor/",
+    "code": "https://github.com/rohitrango/splatarmor"
+}

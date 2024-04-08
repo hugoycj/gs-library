@@ -1,0 +1,6 @@
+{
+    "title": "TRIPS: Trilinear Point Splatting for Real-Time Radiance Field Rendering",
+    "paper": "https://arxiv.org/abs/2401.06003",
+    "project": "https://lfranke.github.io/trips/",
+    "code": "https://github.com/lfranke/trips"
+}

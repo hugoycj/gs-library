@@ -1,0 +1,6 @@
+{
+    "title": "MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images",
+    "paper": "https://arxiv.org/abs/2403.14627",
+    "project": null,
+    "code": "https://github.com/donydchen/mvsplat"
+}

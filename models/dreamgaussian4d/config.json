@@ -1,0 +1,6 @@
+{
+    "title": "DreamGaussian4D: Generative 4D Gaussian Splatting",
+    "paper": "https://arxiv.org/abs/2312.17142",
+    "project": "https://jiawei-ren.github.io/projects/dreamgaussian4d/",
+    "code": "https://github.com/jiawei-ren/dreamgaussian4d"
+}

@@ -1,0 +1,6 @@
+{
+    "title": "Relightable 3D Gaussian: Real-time Point Cloud Relighting with BRDF\n  Decomposition and Ray Tracing",
+    "paper": "https://arxiv.org/abs/2311.16043",
+    "project": "https://nju-3dv.github.io/projects/Relightable3DGaussian/",
+    "code": "https://github.com/NJU-3DV/Relightable3DGaussian"
+}

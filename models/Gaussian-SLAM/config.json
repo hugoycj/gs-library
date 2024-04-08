@@ -1,0 +1,6 @@
+{
+    "title": "Gaussian-SLAM: Photo-realistic Dense SLAM with Gaussian Splatting",
+    "paper": "https://arxiv.org/abs/2312.10070",
+    "project": "https://vladimiryugay.github.io/gaussian_slam/",
+    "code": "https://github.com/VladimirYugay/Gaussian-SLAM"
+}

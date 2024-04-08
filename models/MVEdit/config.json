@@ -1,0 +1,6 @@
+{
+    "title": "Generic 3D Diffusion Adapter Using Controlled Multi-View Editing",
+    "paper": "https://huggingface.co/papers/2403.12032",
+    "project": null,
+    "code": "https://github.com/Lakonik/MVEdit"
+}

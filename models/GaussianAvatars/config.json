@@ -1,0 +1,6 @@
+{
+    "title": "GaussianAvatars: Photorealistic Head Avatars with Rigged 3D Gaussians",
+    "paper": "http://arxiv.org/abs/2312.02069",
+    "project": "https://shenhanqian.github.io/gaussian-avatars",
+    "code": "https://github.com/ShenhanQian/GaussianAvatars"
+}

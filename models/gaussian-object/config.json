@@ -1,0 +1,6 @@
+{
+    "title": "GaussianObject: Just Taking Four Images to Get A High-Quality 3D Object with Gaussian Splatting",
+    "paper": "https://arxiv.org/abs/2402.10259",
+    "project": "https://gaussianobject.github.io/",
+    "code": "https://github.com/GaussianObject/gaussian-object"
+}

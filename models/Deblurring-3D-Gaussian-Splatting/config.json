@@ -1,0 +1,6 @@
+{
+    "title": "Deblurring 3D Gaussian Splatting",
+    "paper": "https://arxiv.org/abs/2401.00834",
+    "project": "https://benhenryl.github.io/Deblurring-3D-Gaussian-Splatting/",
+    "code": "https://github.com/benhenryL/Deblurring-3D-Gaussian-Splatting"
+}

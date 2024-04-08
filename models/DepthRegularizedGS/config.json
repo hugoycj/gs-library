@@ -1,0 +1,6 @@
+{
+    "title": "Depth-Regularized Optimization for 3D Gaussian Splatting in Few-Shot Images",
+    "paper": "https://arxiv.org/abs/2311.13398",
+    "project": "https://robot0321.github.io/DepthRegGS/index.html",
+    "code": "https://github.com/robot0321/DepthRegularizedGS"
+}

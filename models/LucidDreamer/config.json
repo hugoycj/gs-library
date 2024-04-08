@@ -1,0 +1,6 @@
+{
+    "title": "LucidDreamer: Domain-free Generation of 3D Gaussian Splatting Scenes",
+    "paper": "https://arxiv.org/abs/2311.13384",
+    "project": "https://luciddreamer-cvlab.github.io/",
+    "code": "https://github.com/luciddreamer-cvlab/LucidDreamer"
+}

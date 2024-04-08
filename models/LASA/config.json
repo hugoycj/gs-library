@@ -1,0 +1,6 @@
+{
+    "title": "LASA: Instance Reconstruction from Real Scans using A Large-scale Aligned Shape Annotation Dataset",
+    "paper": "https://huggingface.co/papers/2312.12418",
+    "project": "https://gap-lab-cuhk-sz.github.io/LASA/",
+    "code": "https://github.com/GAP-LAB-CUHK-SZ/LASA"
+}

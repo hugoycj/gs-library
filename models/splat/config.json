@@ -1,0 +1,6 @@
+{
+    "title": "Gaussian Splatting SLAM",
+    "paper": "https://arxiv.org/abs/2312.06741",
+    "project": "https://rmurai.co.uk/projects/GaussianSplattingSLAM/",
+    "code": "https://github.com/antimatter15/splat"
+}
