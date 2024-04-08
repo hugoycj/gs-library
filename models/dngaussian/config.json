@@ -1,6 +1,6 @@
 {
     "title": "DNGaussian: Optimizing Sparse-View 3D Gaussian Radiance Fields with Global-Local Depth Normalization",
-    "paper": "https://huggingface.co/papers/2403.06912",
+    "paper": "https://arxiv.org/abs/2403.06912",
     "project": "https://fictionarry.github.io/DNGaussian/",
     "code": "https://github.com/Fictionarry/DNGaussian",
     "spaces": []
