@@ -1,7 +1,0 @@
-{
-        "title": "SuGaR: Surface-Aligned Gaussian Splatting for Efficient 3D Mesh Reconstruction and High-Quality Mesh Rendering",
-        "paper": "https://huggingface.co/papers/2311.12775",
-        "project": "https://anttwo.github.io/sugar/",
-        "code": "https://github.com/Anttwo/SuGaR",
-        "spaces": []
-}
