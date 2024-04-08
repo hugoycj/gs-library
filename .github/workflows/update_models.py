@@ -11,11 +11,15 @@ for dir_name in os.listdir(base_dir):
     config_file = os.path.join(base_dir, dir_name, 'config.json')
     if os.path.isfile(config_file):
         # Load the config.json file
-        with open(config_file, 'r') as file:
-            config = json.load(file)
-        config['slug'] = dir_name
-        # Add the model to the list
-        models.append(config)
+        try:
+            with open(config_file, 'r') as file:
+                config = json.load(file)
+            config['slug'] = dir_name
+            # Add the model to the list
+            models.append(config)
+        except json.decoder.JSONDecodeError as e:
+            print(f"Error decoding {config_file}: {e}")
+            continue
 
 # Upload the models.json file to the S3 bucket
 bucket.put_object(Body=json.dumps(models, indent=4), Key='models.json')
