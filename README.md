@@ -1,3 +1,13 @@
+---
+title: 3DGS-Library
+emoji: 🏢
+colorFrom: green
+colorTo: indigo
+sdk: docker
+pinned: false
+license: mit
+app_port: 3000
+---
 # 3DGS-Library: An awesome 3DGS models library
 Welcome to the 3DGS-Library, a curated collection of state-of-the-art 3D Gaussian Splatting(3DGS) methods and popular NeRF datasets. This repository aims to provide researchers and practitioners with a one-stop-shop for evaluating and comparing different 3DGS techniques on a diverse set of NeRF datasets.
 
