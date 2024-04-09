@@ -1,4 +1,4 @@
-# 3DGS-libary: An awesome 3DGS models library
+# 3DGS-Library: An awesome 3DGS models library
 Welcome to the 3DGS-Library, a curated collection of state-of-the-art 3D Gaussian Splatting(3DGS) methods and popular NeRF datasets. This repository aims to provide researchers and practitioners with a one-stop-shop for evaluating and comparing different 3DGS techniques on a diverse set of NeRF datasets.
 
 The 3DGS-Library contains implementations of 5 popular 3DGS methods, including:
@@ -19,3 +19,4 @@ We encourage the community to actively **contribute to the 3DGS-Library by submi
 # How to contribute
 
 # License
+This repository is based on [Dylan Ebert](https://huggingface.co/dylanebert)'s excellent work [igf](https://huggingface.co/spaces/dylanebert/igf). Please ensure you follow the license and terms of use specified for the igf project.
