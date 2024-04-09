@@ -26,8 +26,8 @@
 
 <div class="container">
     <div on:pointerdown={goHome} class="banner">
-        <h1>IGF</h1>
-        <p>Comparative 3D Research Browser</p>
+        <h1>3DGS-libary</h1>
+        <p>An awesome 3DGS models library</p>
     </div>
     <div class="header">{data.model.title}</div>
     <div class="model-container">
