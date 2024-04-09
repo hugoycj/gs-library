@@ -28,5 +28,9 @@ We encourage the community to actively **contribute to the 3DGS-Library by submi
 
 # How to contribute
 
+
+# Acknowledgments
+This repository is heavily based on [Dylan Ebert](https://huggingface.co/dylanebert)'s excellent work [igf](https://huggingface.co/spaces/dylanebert/igf).
+
 # License
-This repository is based on [Dylan Ebert](https://huggingface.co/dylanebert)'s excellent work [igf](https://huggingface.co/spaces/dylanebert/igf). Please ensure you follow the license and terms of use specified for the igf project.
+This repository is distributed under the MIT License, derived from igf by Dylan Ebert. See the LICENSE.txt file for more information.
