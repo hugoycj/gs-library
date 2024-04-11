@@ -11,6 +11,7 @@
         scenes: {
             slug: string;
             title: string;
+            model: string;
         }[];
     };
 
@@ -58,9 +59,9 @@
             {#if data.scenes.length > 0}
                 <div class="grid">
                     {#each data.scenes as scene}
-                        <a href={`/viewer/${scene.slug}`} class="grid-item">
+                        <a href={`/viewer/${scene.model}/${scene.slug}`} class="grid-item">
                             <img
-                                src={`/thumbnails/${scene.slug}.png`}
+                                src={`/scenes/${scene.model}/${scene.slug}/thumbnail.png`}
                                 alt={scene.title}
                                 class="thumbnail"
                                 on:error={(event) => handleImageError(event)}

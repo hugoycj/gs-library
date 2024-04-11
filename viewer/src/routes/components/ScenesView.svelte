@@ -17,9 +17,9 @@
 
 <div class="grid">
     {#each scenes as scene}
-        <a href={`/viewer/${scene.slug}`} class="grid-item">
+        <a href={`/scenes/${scene.slug}`} class="grid-item">
             <img
-                src={`/thumbnails/${scene.slug}.png`}
+                src={`/scenes/${scene.model}/${scene.slug}/thumbnail.png`}
                 alt={scene.title}
                 class="thumbnail"
                 on:error={(event) => handleImageError(event)}
