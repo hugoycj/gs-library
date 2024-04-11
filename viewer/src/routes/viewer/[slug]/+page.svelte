@@ -13,9 +13,10 @@
             prompt: string;
             pipeline: string[];
         };
-        model: {
+        models: {
             title: string;
-        };
+            slug: string;
+        }[];
     };
 
     let stats: { name: string; value: any }[] = [];
@@ -50,8 +51,8 @@
     }
 
     function destroyViewer() {
-        document.body.classList.remove("viewer");
-        viewer.dispose();
+        // document.body.classList.remove("viewer");
+        // viewer.dispose();
     }
 
     function handleMobileView() {
@@ -139,18 +140,9 @@
         <div class="section">
             <div class="section-title">Model</div>
             <div class="info-panel">
-                {#if data.scene.model}
-                    <a href={`/models/${data.scene.model}`} class="section-label">{data.model.title}</a>
-                    {#if data.scene.pipeline}
-                        <ol class="pipeline">
-                            {#each data.scene.pipeline as step}
-                                <li>{step}</li>
-                            {/each}
-                        </ol>
-                    {/if}
-                {:else}
-                    <div class="section-label">None</div>
-                {/if}
+                {#each data.models as model}
+                    <a href={`/models/${model.slug}`} class="section-label">{model.title}</a>
+                {/each}
             </div>
         </div>
         {#if data.scene.prompt}

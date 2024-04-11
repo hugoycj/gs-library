@@ -15,6 +15,7 @@
         };
         model: {
             title: string;
+            slug: string;
         };
     };
 
@@ -141,13 +142,6 @@
             <div class="info-panel">
                 {#if data.scene.model}
                     <a href={`/models/${data.scene.model}`} class="section-label">{data.model.title}</a>
-                    {#if data.scene.pipeline}
-                        <ol class="pipeline">
-                            {#each data.scene.pipeline as step}
-                                <li>{step}</li>
-                            {/each}
-                        </ol>
-                    {/if}
                 {:else}
                     <div class="section-label">None</div>
                 {/if}

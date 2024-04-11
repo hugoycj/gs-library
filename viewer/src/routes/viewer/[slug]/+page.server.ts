@@ -6,12 +6,12 @@ export async function load({ params }) {
     const scenes = await getScenes();
 
     const scene = scenes.find((scene: any) => scene.slug === params.slug);
-    const model = models.find((model: any) => model.slug === scene!.model);
+    const sceneModels = models.filter((model: any) => model.slug === scene!.model);
 
     if (!scene) throw error(404);
 
     return {
         scene: scene,
-        model: model,
+        models: sceneModels,
     };
 }
