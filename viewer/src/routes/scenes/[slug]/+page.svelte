@@ -37,7 +37,7 @@
                 <div class="grid">
                     {#each data.scenes as scene, i}
                         {#if i < data.models.length}
-                            <a href={`/viewer/${scene.slug}`} class="grid-item">
+                            <a href={`/viewer/${data.models[i].title}/${scene.slug}`} class="grid-item">
                                 <img
                                     src={`/scenes/${data.models[i].title}/${scene.slug}/thumbnail.png`}
                                     alt={scene.title}
