@@ -1,5 +1,5 @@
 {
-    "title": "Mip-Splatting: Alias-free 3D Gaussian Splatting",
+    "title": "Mip-Splatting",
     "paper": "https://arxiv.org/abs/2311.16493",
     "project": "https://niujinshuchong.github.io/mip-splatting/",
     "code": "https://github.com/autonomousvision/mip-splatting"
